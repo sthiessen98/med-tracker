@@ -23,7 +23,6 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CreateMUIStyled } from '@mui/material';
 import ListMeds from './ListMeds';
-import * as data from '../meds.json';
 import AddMed from './AddMed';
 import MedLog from './MedLog';
 
@@ -48,33 +47,8 @@ enum screens {
 
 function App(){
   const [currentScreen, setCurrentScreen] = useState<screens>(screens.list);
-  const [medList, setMedList] = useState<currMedInstance[]>([]);
-  const [medLog, setMedLog] = useState<medLogInstance[]>([]);
 
-  useEffect(()=> {
-    const medData: currMedInstance[] = data.currentMeds;
-    const medLogData: medLogInstance[] = data.medLogs.map((i)=> {
-      return {
-        id: i.id,
-        name: i.name,
-        dose: i.dose,
-        time: new Date(i.time),
-      }
-    });
-
-    setMedLog(medLogData);
-    setMedList(medData);
-  },[]);
-
-  if(!medList.length){
-    return(
-      <SafeAreaView>
-        <Text>
-        No meds :D
-        </Text>
-      </SafeAreaView>
-    );
-  }else if(currentScreen === screens.list){
+  if(currentScreen === screens.list){
     return(
       <SafeAreaView>
         <ListMeds 

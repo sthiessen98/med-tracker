@@ -47,10 +47,15 @@ function ListMeds({ onBackPress }: medLogProps) {
     return(
         <SafeAreaView style={{flexDirection: 'column', alignItems: 'stretch'}}>
             <View style={{ alignItems: 'stretch',  flexDirection: 'row', justifyContent: 'space-between', height: 40, marginBottom: 10, borderBottomColor: 'grey', borderBottomWidth: 2, borderStyle: 'solid' }}>
-                <Text style={{fontSize:20, padding: 4, color: 'black'}}>Med Log</Text>
-                <Button title="Back" onPress={()=>{
-                    onBackPress();
-                 }} />
+                <View></View>
+                <View>
+                    <Text style={{fontSize:20, padding: 4, color: 'black'}}>Med Log</Text>
+                </View>
+                <View>
+                    <Button title="Back" onPress={()=>{
+                        onBackPress();
+                    }} />
+                </View>
             </View>
 
             <FlatList
