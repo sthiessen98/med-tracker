@@ -53,7 +53,6 @@ function MedListItem({med, onDelete}: MedListItemProps){
     return(
         <View style={{  flexDirection: 'row'}}>
             <TouchableOpacity style={{flex: 8}} onPress={async ()=>{
-                            console.log('touch');
                             const log: medLogInstance = {
                                 id: uuid.v4().toString(),
                                 name: med.name,

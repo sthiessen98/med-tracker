@@ -24,8 +24,6 @@ function ListMeds({ onBackPress }: medLogProps) {
     useEffect(()=> {
         async function fetchMedList(){
             let response = await AsyncStorage.getItem('currentMedLog');
-            console.log('medlog:');
-            console.log(response);
             if(response !== null){
                 const result: medLogInstance[] = JSON.parse(response);
                 const datedResults: medLogInstance[] = result.map((i)=> {
