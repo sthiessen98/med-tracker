@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, FlatList, SafeAreaView, Text, View } from "react-native";
+import { Appearance, Button, FlatList, SafeAreaView, Text, View } from "react-native";
 import { medLogInstance } from "./App";
 import MedListItem from "./MedListItem";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -49,7 +49,7 @@ function ListMeds({ onBackPress }: medLogProps) {
             <View style={{ alignItems: 'stretch',  flexDirection: 'row', justifyContent: 'space-between', height: 40, marginBottom: 10, borderBottomColor: 'grey', borderBottomWidth: 2, borderStyle: 'solid' }}>
                 <View></View>
                 <View>
-                    <Text style={{fontSize:20, padding: 4, color: 'black'}}>Med Log</Text>
+                    <Text style={{fontSize:20, padding: 4, color: Appearance.getColorScheme() === 'dark' ? 'white' : 'black'}}>Med Log</Text>
                 </View>
                 <View>
                     <Button title="Back" onPress={()=>{

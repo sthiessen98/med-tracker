@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, FlatList, SafeAreaView, Text, View } from "react-native";
+import { Appearance, Button, FlatList, SafeAreaView, Text, View } from "react-native";
 import { currMedInstance, medLogInstance } from "./App";
 import MedListItem from "./MedListItem";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -34,7 +34,7 @@ function ListMeds({ onAddPress, onLogPress }: medListProps) {
                 <Button title="Logs" onPress={()=> {
                     onLogPress();
                 }}/>
-                <Text style={{fontSize:20, padding: 4, color: 'black'}}>Current Meds</Text>
+                <Text style={{fontSize:20, padding: 4, color: Appearance.getColorScheme() === 'dark' ? 'white' : 'black'}}>Current Meds</Text>
                 <Button title="Add" onPress={()=>{
                     onAddPress();
                  }} />

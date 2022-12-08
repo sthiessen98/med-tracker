@@ -1,5 +1,6 @@
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+import { Appearance } from "react-native";
 import { medLogInstance } from "./App";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import uuid from 'react-native-uuid';
@@ -15,8 +16,8 @@ function MedListItem({name, dose, time}: MedLogItemProps){
     return(
     <View style={Styles.viewStyle}>
         <Text style={Styles.textStyle}>{name} </Text>
-        <Text style={{color: 'black', fontSize: 14}}>| {dose}mg |</Text>
-        <Text style={{color: 'black', fontSize: 14}}> {time.getHours()}:{time.getMinutes()} {time.toDateString()}</Text>
+        <Text style={{color: Appearance.getColorScheme() === 'dark' ? 'white' : 'black', fontSize: 14}}>| {dose}mg |</Text>
+        <Text style={{color: Appearance.getColorScheme() === 'dark' ? 'white' : 'black', fontSize: 14}}> {time.getHours()}:{time.getMinutes()} {time.toDateString()}</Text>
     </View>
     );
 
@@ -24,7 +25,7 @@ function MedListItem({name, dose, time}: MedLogItemProps){
 
 const Styles = {
     textStyle: {
-        color: 'black', 
+        color: Appearance.getColorScheme() === 'dark' ? 'white' : 'black', 
         fontSize: 22,        
     },
     viewStyle: {
@@ -33,7 +34,7 @@ const Styles = {
         justifyContent: "center" as const,
         alignItems: 'center' as const,
         padding: 10,
-        borderColor: "black",
+        borderColor: Appearance.getColorScheme() === 'dark' ? 'white' : 'black',
         borderWidth: 1,
         borderStyle: "solid" as const,
         marginLeft: 4,

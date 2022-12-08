@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, SafeAreaView, Text, TextInput, View } from "react-native";
+import { Appearance, Button, SafeAreaView, Text, TextInput, View } from "react-native";
 import uuid from 'react-native-uuid';
 import { currMedInstance } from "./App";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -50,9 +50,8 @@ function AddMed({onBackPress}: addMedProps){
 
 const Styles = {
     textStyle: {
-        color: 'black', 
+        color: Appearance.getColorScheme() === 'dark' ? 'white' : 'black', 
         fontSize: 22,
-        backgroundColour: 'blue',
         alignItems: 'center' as const,
         
     },
@@ -62,7 +61,7 @@ const Styles = {
         justifyContent: "center" as const,
         alignItems: 'center' as const,
         padding: 10,
-        borderColor: "black",
+        borderColor: Appearance.getColorScheme() === 'dark' ? 'white' : 'black',
         borderWidth: 1,
          borderStyle: "solid" as const,
         marginLeft: 4,
