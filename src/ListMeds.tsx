@@ -16,10 +16,16 @@ interface medListProps {
 
 function ListMeds({ onAddPress, onLogPress }: medListProps) {
     const [medList, setMedList] = useState<currMedInstance[]>([]);
+
     const renderItem = ({item}: medProps)=>(
-        <MedListItem name={item.name} dose={item.dose}/>
+        <MedListItem med={item} onDelete={()=> refetchMedList()}/>
         );
-    
+
+    const refetchMedList = async() => {
+        let response = await AsyncStorage.getItem('currentMeds');
+        response !== null ? setMedList(JSON.parse(response)) : setMedList([]);
+    };
+
     useEffect(()=> {
         async function fetchMedList(){
             let response = await AsyncStorage.getItem('currentMeds');
