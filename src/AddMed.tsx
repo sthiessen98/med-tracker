@@ -26,10 +26,15 @@ function AddMed({onBackPress}: addMedProps){
     return(
         <SafeAreaView style={{flexDirection: 'column', alignItems: 'stretch'}}>
              <View style={{ alignItems: 'stretch',  flexDirection: 'row', justifyContent: 'space-between', height: 40, marginBottom: 10, borderBottomColor: 'grey', borderBottomWidth: 2, borderStyle: 'solid' }}>
-                <Text style={Styles.textStyle}>Add New Med</Text>
-                <Button title="Back" onPress={()=>{
-                    onBackPress();
-                 }} />
+                <View></View>
+                <View>
+                    <Text style={Styles.textStyle}>Add New Med</Text>
+                </View>
+                <View>
+                    <Button title="Back" onPress={()=>{
+                        onBackPress();
+                    }} />
+                </View>
             </View>
             <TextInput style={Styles.textInput} placeholder={'Name'} onChangeText={(value)=> setName(value)}/>
             <TextInput style={Styles.textInput} placeholder={'Dosage (mg)'} onChangeText={(value)=> setDosage(parseInt(value))}/>

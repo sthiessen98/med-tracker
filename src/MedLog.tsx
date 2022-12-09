@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Appearance, Button, FlatList, SafeAreaView, Text, View } from "react-native";
 import { medLogInstance } from "./App";
-import MedListItem from "./MedListItem";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MedLogItem from "./MedLogItem";
 
