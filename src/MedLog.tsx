@@ -3,6 +3,8 @@ import { Appearance, Button, FlatList, SafeAreaView, Text, View } from "react-na
 import { medLogInstance } from "./App";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MedLogItem from "./MedLogItem";
+import ScreenHeader from "./Components/ScreenHeader";
+import ScreenFooter from "./Components/ScreenFooter";
 
 
 interface medProps {
@@ -42,25 +44,15 @@ function ListMeds({ onBackPress }: medLogProps) {
     },[]);
 
     return(
-        <SafeAreaView style={{flexDirection: 'column', alignItems: 'stretch'}}>
-            <View style={{ alignItems: 'stretch',  flexDirection: 'row', justifyContent: 'space-between', height: 40, marginBottom: 10, borderBottomColor: 'grey', borderBottomWidth: 2, borderStyle: 'solid' }}>
-                <View></View>
-                <View>
-                    <Text style={{fontSize:20, padding: 4, color: Appearance.getColorScheme() === 'dark' ? 'white' : 'black'}}>Med Log</Text>
-                </View>
-                <View>
-                    <Button title="Back" onPress={()=>{
-                        onBackPress();
-                    }} />
-                </View>
-            </View>
-
+        <View style={{height: '100%', width: '100%', flexDirection: 'column', alignItems: 'stretch'}}>
+            <ScreenHeader title={'Med Log'}/>
             <FlatList
             data={medLog.sort((a,b)=> a.time.getTime() < b.time.getTime() ? 1 : -1)}
             renderItem={renderItem}
             keyExtractor={(item) => item.id}
             />
-        </SafeAreaView>
+            <ScreenFooter leftButtonTitle="Back" leftButtonPress={()=> onBackPress()}/>
+        </View>
 
     );
 };

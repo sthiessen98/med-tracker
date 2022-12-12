@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Appearance, Button, FlatList, SafeAreaView, Text, View } from "react-native";
-import { currMedInstance, medLogInstance } from "./App";
+import { Button, FlatList, SafeAreaView, Text, View } from "react-native";
+import { currMedInstance } from "./App";
 import MedListItem from "./MedListItem";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ScreenHeader from "./Components/ScreenHeader";
+import ScreenFooter from "./Components/ScreenFooter";
 
 
 interface medProps {
@@ -35,24 +37,21 @@ function ListMeds({ onAddPress, onLogPress }: medListProps) {
     },[]);
 
     return(
-        <SafeAreaView style={{flexDirection: 'column', alignItems: 'stretch'}}>
-            <View style={{ alignItems: 'stretch',  flexDirection: 'row', justifyContent: 'space-between', height: 40, marginBottom: 10, borderBottomColor: 'grey', borderBottomWidth: 2, borderStyle: 'solid' }}>
-                <Button title="Logs" onPress={()=> {
-                    onLogPress();
-                }}/>
-                <Text style={{fontSize:20, padding: 4, color: Appearance.getColorScheme() === 'dark' ? 'white' : 'black'}}>Current Meds</Text>
-                <Button title="Add" onPress={()=>{
-                    onAddPress();
-                 }} />
+        <View style={{height: '100%', width: '100%', flexDirection: 'column', justifyContent: 'space-between'}}>
+            <View>
+                <ScreenHeader title={'Current Meds'}/>
             </View>
-
-            <FlatList
-            data={medList}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-            />
-        </SafeAreaView>
-
+            <View style={{flex: 1}}>
+                <FlatList
+                data={medList}
+                renderItem={renderItem}
+                keyExtractor={(item) => item.id}
+                />
+            </View>
+            <View style={{flex: 1, justifyContent: 'flex-end'}}>
+ <ScreenFooter leftButtonTitle="Logs" leftButtonPress={()=> onLogPress()} rightButtonTitle='Add' rightButtonPress={()=> onAddPress()}/>
+                </View>              
+        </View>
     );
 };
 

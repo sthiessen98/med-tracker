@@ -3,6 +3,8 @@ import { Appearance, Button, SafeAreaView, Text, TextInput, View } from "react-n
 import uuid from 'react-native-uuid';
 import { currMedInstance } from "./App";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ScreenHeader from "./Components/ScreenHeader";
+import ScreenFooter from "./Components/ScreenFooter";
 
 interface addMedProps {
   //  meds: currMedInstance[];
@@ -24,21 +26,13 @@ function AddMed({onBackPress}: addMedProps){
 
 
     return(
-        <SafeAreaView style={{flexDirection: 'column', alignItems: 'stretch'}}>
-             <View style={{ alignItems: 'stretch',  flexDirection: 'row', justifyContent: 'space-between', height: 40, marginBottom: 10, borderBottomColor: 'grey', borderBottomWidth: 2, borderStyle: 'solid' }}>
-                <View></View>
-                <View>
-                    <Text style={Styles.textStyle}>Add New Med</Text>
-                </View>
-                <View>
-                    <Button title="Back" onPress={()=>{
-                        onBackPress();
-                    }} />
-                </View>
-            </View>
-            <TextInput style={Styles.textInput} placeholder={'Name'} onChangeText={(value)=> setName(value)}/>
-            <TextInput style={Styles.textInput} placeholder={'Dosage (mg)'} onChangeText={(value)=> setDosage(parseInt(value))}/>
-            <Button title={'Submit'} onPress={async ()=>{
+        <View style={{height: '100%', width: '100%', flexDirection: 'column', justifyContent: 'space-between'}}>
+            <ScreenHeader title={'Add Med'}/>
+
+            <View>
+                <TextInput style={Styles.textInput} placeholder={'Name'} onChangeText={(value)=> setName(value)}/>
+                <TextInput style={Styles.textInput} placeholder={'Dosage (mg)'} onChangeText={(value)=> setDosage(parseInt(value))}/>
+                <Button title={'Submit'} onPress={async ()=>{
                 if(name !== null && dosage > 0){
                     const newMed: currMedInstance = {
                         id: uuid.v4().toString(),
@@ -49,7 +43,11 @@ function AddMed({onBackPress}: addMedProps){
                     onBackPress();
                 }
             }}/>
-        </SafeAreaView>
+            </View>
+            <View style={{flex: 1, justifyContent: 'flex-end'}}>
+                <ScreenFooter leftButtonTitle="Back" leftButtonPress={()=> onBackPress()}/>
+            </View>
+        </View>
     );
 }
 
