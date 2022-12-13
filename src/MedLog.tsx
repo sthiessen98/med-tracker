@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import MedLogItem from "./MedLogItem";
 import ScreenHeader from "./Components/ScreenHeader";
 import ScreenFooter from "./Components/ScreenFooter";
+import MedLogEditItem from "./MedLogEditItem";
 
 
 interface medProps {
@@ -17,9 +18,24 @@ interface medLogProps {
 
 function ListMeds({ onBackPress }: medLogProps) {
     const [medLog, setMedLog] = useState<medLogInstance[]>([]);
+    const [currEditLog, setCurrEditLog] = useState<medLogInstance | null>(null);
 
     const renderItem = ({item}: medProps)=>(
-        <MedLogItem name={item.name} dose={item.dose} time={item.time}/>
+        <View>
+            <MedLogItem item={item} onPress={setCurrEditLog}/>
+            {item === currEditLog && (
+                <MedLogEditItem item={item} onClose={()=> setCurrEditLog(null)} onSubmit={(timestamp: number)=> {
+                    setMedLog([...medLog.filter((i)=> i.id !== currEditLog.id), ...medLog.filter((i)=> i.id === currEditLog.id).map((i)=> {
+                        return {
+                        id: i.id,
+                        name: i.name,
+                        dose: i.dose,
+                        time: new Date(timestamp)
+                        }
+                    })]);
+                }}/>
+            )}
+        </View>       
         );
     
     useEffect(()=> {

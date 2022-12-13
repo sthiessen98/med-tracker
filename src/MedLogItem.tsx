@@ -2,22 +2,21 @@ import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { Appearance } from "react-native";
 import { medLogInstance } from "./App";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import uuid from 'react-native-uuid';
 
 interface MedLogItemProps {
-    name: string;
-    dose: number;
-    time: Date;
+    item: medLogInstance;
+    onPress:(selected: medLogInstance)=> void;
 }
 
-function MedListItem({name, dose, time}: MedLogItemProps){
+function MedListItem({item, onPress}: MedLogItemProps){
  
     return(
     <View style={Styles.viewStyle}>
-        <Text style={Styles.textStyle}>{name} </Text>
-        <Text style={{color: Appearance.getColorScheme() === 'dark' ? 'white' : 'black', fontSize: 14}}>| {dose}mg |</Text>
-        <Text style={{color: Appearance.getColorScheme() === 'dark' ? 'white' : 'black', fontSize: 14}}> {time.getHours()}:{time.getMinutes()} {time.toDateString()}</Text>
+        <TouchableOpacity style={Styles.touchableStyle} onPress={()=> onPress(item)}>
+        <Text style={Styles.textStyle}>{item.name} </Text>
+            <Text style={{color: Appearance.getColorScheme() === 'dark' ? 'white' : 'black', fontSize: 14}}>| {item.dose}mg |</Text>
+            <Text style={{color: Appearance.getColorScheme() === 'dark' ? 'white' : 'black', fontSize: 14}}> {item.time.getHours()}:{item.time.getMinutes()} {item.time.toDateString()}</Text>
+        </TouchableOpacity>
     </View>
     );
 
@@ -41,6 +40,14 @@ const Styles = {
         marginRight: 4,
         marginTop: 10,
     },
+    touchableStyle: {
+        flexDirection: 'row' as const,
+        width: '100%',
+        height: 55,
+        justifyContent: "center" as const,
+        alignItems: 'center' as const,
+        padding: 10,
+    }
 }
 
 export default MedListItem;
