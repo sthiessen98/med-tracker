@@ -24,7 +24,8 @@ function ListMeds({ onBackPress }: medLogProps) {
         <View>
             <MedLogItem item={item} onPress={setCurrEditLog}/>
             {item === currEditLog && (
-                <MedLogEditItem item={item} onClose={()=> setCurrEditLog(null)} onSubmit={(timestamp: number)=> {
+                <MedLogEditItem item={item} onClose={()=> setCurrEditLog(null)} 
+                onSubmit={(timestamp: number)=> {
                     setMedLog([...medLog.filter((i)=> i.id !== currEditLog.id), ...medLog.filter((i)=> i.id === currEditLog.id).map((i)=> {
                         return {
                         id: i.id,
@@ -33,7 +34,8 @@ function ListMeds({ onBackPress }: medLogProps) {
                         time: new Date(timestamp)
                         }
                     })]);
-                }}/>
+                }}
+                />
             )}
         </View>       
         );

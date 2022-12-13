@@ -18,6 +18,8 @@ function MedLogEditItem({item, onSubmit, onClose}: IProps){
             if(value.nativeEvent.timestamp && value.type === 'set'){
                 onSubmit(value.nativeEvent.timestamp);
                 onClose();
+            }else{
+                onClose();
             }
             }}/>
         </View>

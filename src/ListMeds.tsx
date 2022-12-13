@@ -49,8 +49,8 @@ function ListMeds({ onAddPress, onLogPress }: medListProps) {
                 />
             </View>
             <View style={{flex: 1, justifyContent: 'flex-end'}}>
- <ScreenFooter leftButtonTitle="Logs" leftButtonPress={()=> onLogPress()} rightButtonTitle='Add' rightButtonPress={()=> onAddPress()}/>
-                </View>              
+                <ScreenFooter leftButtonTitle="Logs" leftButtonPress={()=> onLogPress()} rightButtonTitle='Add' rightButtonPress={()=> onAddPress()}/>
+            </View>              
         </View>
     );
 };
