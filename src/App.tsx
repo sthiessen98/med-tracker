@@ -8,20 +8,10 @@
  * @format
  */
 
-import React, { useState, useEffect } from 'react';
-import  {type PropsWithChildren} from 'react';
-import RNFS from 'react-native-fs';
+import React, { useState } from 'react';
 import {
   SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
 } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { CreateMUIStyled } from '@mui/material';
 import ListMeds from './ListMeds';
 import AddMed from './AddMed';
 import MedLog from './MedLog';
