@@ -7,10 +7,15 @@ import uuid from 'react-native-uuid';
 
 interface MedListItemProps {
     med: currMedInstance;
-    onDelete(): void;
+    logs: medLogInstance[];
+    refetch(): void;
 }
 
-function MedListItem({med, onDelete}: MedListItemProps){
+function MedListItem({med, logs, refetch}: MedListItemProps){
+    const currentTime = new Date();
+    const cutOffTime = new Date(currentTime.setHours(currentTime.getHours()-11));
+    const takenRecently: boolean = Boolean(logs.filter((log) => new Date(log.time).toISOString() > cutOffTime.toISOString()).length);
+
 
     const addMedLog = async (newLog: medLogInstance)=> {
         const jsonValue = await AsyncStorage.getItem('currentMedLog');
@@ -18,6 +23,8 @@ function MedListItem({med, onDelete}: MedListItemProps){
         const updatedMedLog = [...medLog, newLog];
         const updatedMedLogJson = JSON.stringify(updatedMedLog);
         await AsyncStorage.setItem('currentMedLog', updatedMedLogJson);
+        console.log('refetch');
+        refetch();
     }
 
     const showDeleteConfirmation = (med: currMedInstance) => {
@@ -47,7 +54,7 @@ function MedListItem({med, onDelete}: MedListItemProps){
         const updatedMeds = meds.filter((i)=> i.id !== med.id);
         const updatedMedsJson = JSON.stringify(updatedMeds);
         await AsyncStorage.setItem('currentMeds', updatedMedsJson);
-        onDelete();
+        refetch();
     }
     
     return(
@@ -55,13 +62,14 @@ function MedListItem({med, onDelete}: MedListItemProps){
             <TouchableOpacity style={{flex: 8}} onPress={async ()=>{
                             const log: medLogInstance = {
                                 id: uuid.v4().toString(),
+                                medId: med.id,
                                 name: med.name,
                                 dose: med.dose,
                                 time: new Date(),
                             };
                             await addMedLog(log);
                         }}> 
-                <View style={Styles.viewStyle}>
+                <View style={takenRecently ? Styles.warningViewStyle : Styles.viewStyle}>
                     <Text style={Styles.textStyle}>{med.name} - </Text>
                     <Text style={{color: Appearance.getColorScheme() === 'dark' ? 'white' : 'black', fontSize: 14}}> Dose: {med.dose}mg</Text>
                 </View>
@@ -88,6 +96,20 @@ const Styles = {
         fontSize: 14, 
     },
     viewStyle: {
+        flexDirection: 'row' as const,
+        height: 55,
+        justifyContent: "center" as const,
+        alignItems: 'center' as const,
+        padding: 10,
+        borderColor: Appearance.getColorScheme() === 'dark' ? 'white' : 'black',
+        borderWidth: 1,
+        borderStyle: "solid" as const,
+        marginLeft: 4,
+        marginRight: 4,
+        marginTop: 10,
+    },
+    warningViewStyle: {
+        backgroundColor: 'red',
         flexDirection: 'row' as const,
         height: 55,
         justifyContent: "center" as const,

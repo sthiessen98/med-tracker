@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, SafeAreaView, Text, View } from "react-native";
-import { currMedInstance } from "./App";
+import { currMedInstance, medLogInstance } from "./App";
 import MedListItem from "./MedListItem";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ScreenHeader from "./Components/ScreenHeader";
@@ -18,22 +18,21 @@ interface medListProps {
 
 function ListMeds({ onAddPress, onLogPress }: medListProps) {
     const [medList, setMedList] = useState<currMedInstance[]>([]);
+    const [medLogs, setMedLogs] = useState<medLogInstance[]>([]);
 
     const renderItem = ({item}: medProps)=>(
-        <MedListItem med={item} onDelete={()=> refetchMedList()}/>
+        <MedListItem med={item} logs={medLogs.filter((log)=> log.medId === item.id)} refetch={()=> refetchData()}/>
         );
 
-    const refetchMedList = async() => {
+    const refetchData = async() => {
         let response = await AsyncStorage.getItem('currentMeds');
         response !== null ? setMedList(JSON.parse(response)) : setMedList([]);
+        let responseLogs = await AsyncStorage.getItem('currentMedLog');
+        responseLogs !== null ? setMedLogs(JSON.parse(responseLogs)) : setMedLogs([]);
     };
 
     useEffect(()=> {
-        async function fetchMedList(){
-            let response = await AsyncStorage.getItem('currentMeds');
-            response !== null ? setMedList(JSON.parse(response)) : setMedList([]);
-        }
-        fetchMedList();
+        refetchData();
     },[]);
 
     return(

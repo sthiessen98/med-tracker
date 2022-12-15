@@ -19,6 +19,7 @@ import MedLog from './MedLog';
 
 export interface medLogInstance {
   id: string;
+  medId?: string;
   name: string;
   time: Date;
   dose: number;
