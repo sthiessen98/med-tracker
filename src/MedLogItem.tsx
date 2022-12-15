@@ -9,13 +9,15 @@ interface MedLogItemProps {
 }
 
 function MedListItem({item, onPress}: MedLogItemProps){
+
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
  
     return(
     <View style={Styles.viewStyle}>
         <TouchableOpacity style={Styles.touchableStyle} onPress={()=> onPress(item)}>
         <Text style={Styles.textStyle}>{item.name} </Text>
             <Text style={{color: Appearance.getColorScheme() === 'dark' ? 'white' : 'black', fontSize: 14}}>| {item.dose}mg |</Text>
-            <Text style={{color: Appearance.getColorScheme() === 'dark' ? 'white' : 'black', fontSize: 14}}> {item.time.getHours()}:{item.time.getMinutes()} {item.time.toDateString()}</Text>
+            <Text style={{color: Appearance.getColorScheme() === 'dark' ? 'white' : 'black', fontSize: 14}}> {item.time.getHours() < 10 ? 0 : ''}{item.time.getHours()}:{item.time.getMinutes() < 10 ? 0 : ''}{item.time.getMinutes()}   {monthNames[item.time.getMonth()]} {item.time.getDate()}</Text>
         </TouchableOpacity>
     </View>
     );
