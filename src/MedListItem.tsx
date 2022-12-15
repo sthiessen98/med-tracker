@@ -13,8 +13,8 @@ interface MedListItemProps {
 
 function MedListItem({med, logs, refetch}: MedListItemProps){
     const currentTime = new Date();
-    const cutOffTime = new Date(currentTime.setHours(currentTime.getHours()-11));
-    const takenRecently: boolean = Boolean(logs.filter((log) => new Date(log.time).toISOString() > cutOffTime.toISOString()).length);
+    const cutOffTime = new Date(currentTime.setHours(currentTime.getHours()- (med?.doseInterval ?? 0)));
+    const takenRecently: boolean = Boolean(logs.filter((log) => new Date(log.time).toISOString() > cutOffTime.toISOString()).length && med?.doseInterval);
 
 
     const addMedLog = async (newLog: medLogInstance)=> {
@@ -23,7 +23,6 @@ function MedListItem({med, logs, refetch}: MedListItemProps){
         const updatedMedLog = [...medLog, newLog];
         const updatedMedLogJson = JSON.stringify(updatedMedLog);
         await AsyncStorage.setItem('currentMedLog', updatedMedLogJson);
-        console.log('refetch');
         refetch();
     }
 

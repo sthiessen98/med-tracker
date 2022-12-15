@@ -7,7 +7,6 @@ import ScreenHeader from "./Components/ScreenHeader";
 import ScreenFooter from "./Components/ScreenFooter";
 
 interface addMedProps {
-  //  meds: currMedInstance[];
     onBackPress(): void;
 }
 
@@ -15,6 +14,8 @@ function AddMed({onBackPress}: addMedProps){
 
     const [name, setName] = useState<string>('');
     const [dosage, setDosage] = useState<number>(0);
+    const [maxDosage, setMaxDosage] = useState<number>(0);
+    const [interval, setInterval] = useState<number>(0);
 
     const updateMedList = async (newMed: currMedInstance)=> {
         const jsonValue = await AsyncStorage.getItem('currentMeds');
@@ -32,12 +33,16 @@ function AddMed({onBackPress}: addMedProps){
             <View>
                 <TextInput style={Styles.textInput} placeholder={'Name'} onChangeText={(value)=> setName(value)}/>
                 <TextInput style={Styles.textInput} placeholder={'Dosage (mg)'} onChangeText={(value)=> setDosage(parseInt(value))}/>
+                <TextInput style={Styles.textInput} placeholder={'Max Dosage (mg) (optional)'} onChangeText={(value)=> setMaxDosage(parseInt(value))}/>
+                <TextInput style={Styles.textInput} placeholder={'Time between doses (hours)'} onChangeText={(value)=> setInterval(parseInt(value))}/>
                 <Button title={'Submit'} onPress={async ()=>{
                 if(name !== null && dosage > 0){
                     const newMed: currMedInstance = {
                         id: uuid.v4().toString(),
                         name: name,
                         dose: dosage,
+                        maxDosage: maxDosage > 0 ? maxDosage : undefined,
+                        doseInterval: interval > 0 ? interval : undefined,
                     }
                     await updateMedList(newMed);
                     onBackPress();

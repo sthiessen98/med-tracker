@@ -29,6 +29,8 @@ export interface currMedInstance {
   id: string;
   name: string;
   dose: number;
+  maxDosage?: number;
+  doseInterval?: number;
 }
 enum screens {
   list = 'list',
