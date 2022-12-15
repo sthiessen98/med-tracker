@@ -58,7 +58,7 @@ function MedListItem({med, logs, refetch, onEditPress}: MedListItemProps){
     }
     
     return(
-        <View style={{  flexDirection: 'row'}}>
+        <View style={{flexDirection: 'row'}}>
             <TouchableOpacity style={{flex: 6}} onPress={async ()=>{
                             const log: medLogInstance = {
                                 id: uuid.v4().toString(),
@@ -103,12 +103,13 @@ const Styles = {
         fontSize: 14, 
     },
     viewStyle: {
+        backgroundColor: '#4A4737',
         flexDirection: 'row' as const,
-        height: 55,
+        height: 50,
         justifyContent: "center" as const,
         alignItems: 'center' as const,
         padding: 10,
-        borderColor: Appearance.getColorScheme() === 'dark' ? 'white' : 'black',
+        borderColor: 'black',
         borderWidth: 1,
         borderStyle: "solid" as const,
         marginLeft: 4,
@@ -116,13 +117,13 @@ const Styles = {
         marginTop: 10,
     },
     warningViewStyle: {
-        backgroundColor: 'red',
+        backgroundColor: '#BC5A41',
         flexDirection: 'row' as const,
-        height: 55,
+        height: 50,
         justifyContent: "center" as const,
         alignItems: 'center' as const,
         padding: 10,
-        borderColor: Appearance.getColorScheme() === 'dark' ? 'white' : 'black',
+        borderColor: 'black',
         borderWidth: 1,
         borderStyle: "solid" as const,
         marginLeft: 4,
@@ -130,13 +131,13 @@ const Styles = {
         marginTop: 10,
     },
     deleteViewStyle: {
-        backgroundColor: 'red',
+        backgroundColor: '#BC5A41',
         flexDirection: 'row' as const,
-        height: 55,
+        height: 50,
         justifyContent: "center" as const,
         alignItems: 'center' as const,
         padding: 10,
-        borderColor: 'red',
+        borderColor: 'black',
         borderWidth: 1,
         borderStyle: "solid" as const,
         marginLeft: 4,
@@ -146,11 +147,11 @@ const Styles = {
     editViewStyle: {
         backgroundColor: 'orange',
         flexDirection: 'row' as const,
-        height: 55,
+        height: 50,
         justifyContent: "center" as const,
         alignItems: 'center' as const,
         padding: 10,
-        borderColor: 'orange',
+        borderColor: 'black',
         borderWidth: 1,
         borderStyle: "solid" as const,
         marginLeft: 4,

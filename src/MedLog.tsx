@@ -76,7 +76,7 @@ function ListMeds({ onBackPress }: medLogProps) {
     },[]);
     
     return(
-        <View style={{height: '100%', width: '100%', flexDirection: 'column', alignItems: 'stretch'}}>
+        <View style={{backgroundColor: '#FFF380', height: '100%', width: '100%', flexDirection: 'column', alignItems: 'stretch'}}>
             <ScreenHeader title={'Med Log'}/>
             <FlatList
             data={medLog.sort((a,b)=> a?.time?.getTime() < b?.time?.getTime() ? 1 : -1)}
