@@ -40,12 +40,17 @@ enum screens {
 
 function App(){
   const [currentScreen, setCurrentScreen] = useState<screens>(screens.list);
+  const [editableItem, setEditableItem] = useState<currMedInstance | undefined>(undefined);
 
   if(currentScreen === screens.list){
     return(
       <SafeAreaView>
         <ListMeds 
         onAddPress={()=> {setCurrentScreen(screens.add)}}
+        onEditPress={(item)=> {
+          setCurrentScreen(screens.add);
+          setEditableItem(item);
+        }}
         onLogPress={()=> {setCurrentScreen(screens.log)}}
       />
       </SafeAreaView>
@@ -53,8 +58,11 @@ function App(){
   }else if(currentScreen === screens.add){
     return(
       <SafeAreaView>
-        <AddMed onBackPress={()=>{
+        <AddMed 
+        editableItem={editableItem}
+        onBackPress={()=>{
           setCurrentScreen(screens.list);
+          setEditableItem(undefined);
         }}/>
       </SafeAreaView>
     );

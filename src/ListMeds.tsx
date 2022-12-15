@@ -12,16 +12,17 @@ interface medProps {
 }
 interface medListProps {
     onAddPress(): void;
+    onEditPress: (item: currMedInstance) => void;
     onLogPress(): void;
 }
 
 
-function ListMeds({ onAddPress, onLogPress }: medListProps) {
+function ListMeds({ onAddPress, onLogPress, onEditPress}: medListProps) {
     const [medList, setMedList] = useState<currMedInstance[]>([]);
     const [medLogs, setMedLogs] = useState<medLogInstance[]>([]);
 
     const renderItem = ({item}: medProps)=>(
-        <MedListItem med={item} logs={medLogs.filter((log)=> log.medId === item.id)} refetch={()=> refetchData()}/>
+        <MedListItem med={item} logs={medLogs.filter((log)=> log.medId === item.id)} onEditPress={onEditPress} refetch={()=> refetchData()}/>
         );
 
     const refetchData = async() => {

@@ -9,9 +9,10 @@ interface MedListItemProps {
     med: currMedInstance;
     logs: medLogInstance[];
     refetch(): void;
+    onEditPress:(item: currMedInstance) => void;
 }
 
-function MedListItem({med, logs, refetch}: MedListItemProps){
+function MedListItem({med, logs, refetch, onEditPress}: MedListItemProps){
     const currentTime = new Date();
     const cutOffTime = new Date(currentTime.setHours(currentTime.getHours()- (med?.doseInterval ?? 0)));
     const takenRecently: boolean = Boolean(logs.filter((log) => new Date(log.time).toISOString() > cutOffTime.toISOString()).length && med?.doseInterval);
@@ -58,7 +59,7 @@ function MedListItem({med, logs, refetch}: MedListItemProps){
     
     return(
         <View style={{  flexDirection: 'row'}}>
-            <TouchableOpacity style={{flex: 8}} onPress={async ()=>{
+            <TouchableOpacity style={{flex: 6}} onPress={async ()=>{
                             const log: medLogInstance = {
                                 id: uuid.v4().toString(),
                                 medId: med.id,
@@ -70,7 +71,14 @@ function MedListItem({med, logs, refetch}: MedListItemProps){
                         }}> 
                 <View style={takenRecently ? Styles.warningViewStyle : Styles.viewStyle}>
                     <Text style={Styles.textStyle}>{med.name} - </Text>
-                    <Text style={{color: Appearance.getColorScheme() === 'dark' ? 'white' : 'black', fontSize: 14}}> Dose: {med.dose}mg</Text>
+                    <Text style={{color: Appearance.getColorScheme() === 'dark' ? 'white' : 'black', fontSize: 14}}> {med.dose}mg</Text>
+                </View>
+            </TouchableOpacity>
+            <TouchableOpacity style={{flex: 2}} onPress={()=> {
+                onEditPress(med);
+            }}>
+                <View style={Styles.editViewStyle}>
+                    <Text style={Styles.minorTextStyle}>Edit </Text>
                 </View>
             </TouchableOpacity>
             <TouchableOpacity style={{flex: 2}} onPress={()=> {
@@ -129,6 +137,20 @@ const Styles = {
         alignItems: 'center' as const,
         padding: 10,
         borderColor: 'red',
+        borderWidth: 1,
+        borderStyle: "solid" as const,
+        marginLeft: 4,
+        marginRight: 4,
+        marginTop: 10,
+    },
+    editViewStyle: {
+        backgroundColor: 'orange',
+        flexDirection: 'row' as const,
+        height: 55,
+        justifyContent: "center" as const,
+        alignItems: 'center' as const,
+        padding: 10,
+        borderColor: 'orange',
         borderWidth: 1,
         borderStyle: "solid" as const,
         marginLeft: 4,

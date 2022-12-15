@@ -7,20 +7,23 @@ import ScreenHeader from "./Components/ScreenHeader";
 import ScreenFooter from "./Components/ScreenFooter";
 
 interface addMedProps {
+    editableItem?: currMedInstance;
     onBackPress(): void;
 }
 
-function AddMed({onBackPress}: addMedProps){
+function AddMed({onBackPress, editableItem}: addMedProps){
 
-    const [name, setName] = useState<string>('');
-    const [dosage, setDosage] = useState<number>(0);
-    const [maxDosage, setMaxDosage] = useState<number>(0);
-    const [interval, setInterval] = useState<number>(0);
+    const [name, setName] = useState<string>(editableItem?.name ?? '');
+    const [dosage, setDosage] = useState<number>(editableItem?.dose ?? 0);
+    const [maxDosage, setMaxDosage] = useState<number>(editableItem?.maxDosage ?? 0);
+    const [interval, setInterval] = useState<number>(editableItem?.doseInterval ?? 0);
 
     const updateMedList = async (newMed: currMedInstance)=> {
         const jsonValue = await AsyncStorage.getItem('currentMeds');
         const meds: currMedInstance[] = jsonValue !== null ? JSON.parse(jsonValue) : [];
-        const updatedMeds = [...meds, newMed];
+        const updatedMeds = editableItem ? 
+            [...meds.filter((m)=> m.id !== editableItem.id), newMed] :
+            [...meds, newMed];
         const updatedMedsJson = JSON.stringify(updatedMeds);
         await AsyncStorage.setItem('currentMeds', updatedMedsJson);
     }
@@ -28,17 +31,17 @@ function AddMed({onBackPress}: addMedProps){
 
     return(
         <View style={{height: '100%', width: '100%', flexDirection: 'column', justifyContent: 'space-between'}}>
-            <ScreenHeader title={'Add Med'}/>
+            <ScreenHeader title={editableItem ? 'Edit Med' : 'Add Med'}/>
 
             <View>
-                <TextInput style={Styles.textInput} placeholder={'Name'} onChangeText={(value)=> setName(value)}/>
-                <TextInput style={Styles.textInput} placeholder={'Dosage (mg)'} onChangeText={(value)=> setDosage(parseInt(value))}/>
-                <TextInput style={Styles.textInput} placeholder={'Max Dosage (mg) (optional)'} onChangeText={(value)=> setMaxDosage(parseInt(value))}/>
-                <TextInput style={Styles.textInput} placeholder={'Time between doses (hours)'} onChangeText={(value)=> setInterval(parseInt(value))}/>
+                <TextInput style={Styles.textInput} placeholder={'Name'} defaultValue={name} onChangeText={(value)=> setName(value)}/>
+                <TextInput style={Styles.textInput} placeholder={'Dosage (mg)'} defaultValue={dosage.toString()} onChangeText={(value)=> setDosage(parseInt(value))}/>
+                <TextInput style={Styles.textInput} placeholder={'Max Dosage (mg) (optional)'} defaultValue={maxDosage.toString()} onChangeText={(value)=> setMaxDosage(parseInt(value))}/>
+                <TextInput style={Styles.textInput} placeholder={'Time between doses (hours)'} defaultValue={interval.toString()} onChangeText={(value)=> setInterval(parseInt(value))}/>
                 <Button title={'Submit'} onPress={async ()=>{
                 if(name !== null && dosage > 0){
                     const newMed: currMedInstance = {
-                        id: uuid.v4().toString(),
+                        id: editableItem ? editableItem.id : uuid.v4().toString(),
                         name: name,
                         dose: dosage,
                         maxDosage: maxDosage > 0 ? maxDosage : undefined,
