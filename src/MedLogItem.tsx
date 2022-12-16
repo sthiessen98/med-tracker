@@ -30,7 +30,7 @@ const Styles = {
         fontSize: 22,        
     },
     viewStyle: {
-        backgroundColor: '#4A4737',
+        backgroundColor: '#64a460',
         flexDirection: 'row' as const,
         height: 50,
         justifyContent: "center" as const,
@@ -39,6 +39,7 @@ const Styles = {
         borderColor: 'black',
         borderWidth: 1,
         borderStyle: "solid" as const,
+        borderRadius: 7,
         marginLeft: 4,
         marginRight: 4,
         marginTop: 10,

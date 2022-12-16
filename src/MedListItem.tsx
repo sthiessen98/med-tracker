@@ -71,7 +71,7 @@ function MedListItem({med, logs, refetch, onEditPress}: MedListItemProps){
                         }}> 
                 <View style={takenRecently ? Styles.warningViewStyle : Styles.viewStyle}>
                     <Text style={Styles.textStyle}>{med.name} - </Text>
-                    <Text style={{color: Appearance.getColorScheme() === 'dark' ? 'white' : 'black', fontSize: 14}}> {med.dose}mg</Text>
+                    <Text style={Styles.minorTextStyle}> {med.dose}mg</Text>
                 </View>
             </TouchableOpacity>
             <TouchableOpacity style={{flex: 2}} onPress={()=> {
@@ -95,15 +95,15 @@ function MedListItem({med, logs, refetch, onEditPress}: MedListItemProps){
 
 const Styles = {
     textStyle: {
-        color: Appearance.getColorScheme() === 'dark' ? 'white' : 'black', 
+        color: 'white', 
         fontSize: 22,        
     },
     minorTextStyle: {
-        color: Appearance.getColorScheme() === 'dark' ? 'white' : 'black', 
+        color: 'white', 
         fontSize: 14, 
     },
     viewStyle: {
-        backgroundColor: '#4A4737',
+        backgroundColor: '#64a460',
         flexDirection: 'row' as const,
         height: 50,
         justifyContent: "center" as const,
@@ -112,12 +112,13 @@ const Styles = {
         borderColor: 'black',
         borderWidth: 1,
         borderStyle: "solid" as const,
+        borderRadius: 7,
         marginLeft: 4,
         marginRight: 4,
         marginTop: 10,
     },
     warningViewStyle: {
-        backgroundColor: '#BC5A41',
+        backgroundColor: '#b30900',
         flexDirection: 'row' as const,
         height: 50,
         justifyContent: "center" as const,
@@ -126,6 +127,7 @@ const Styles = {
         borderColor: 'black',
         borderWidth: 1,
         borderStyle: "solid" as const,
+        borderRadius: 7,
         marginLeft: 4,
         marginRight: 4,
         marginTop: 10,
@@ -140,6 +142,7 @@ const Styles = {
         borderColor: 'black',
         borderWidth: 1,
         borderStyle: "solid" as const,
+        borderRadius: 3,
         marginLeft: 4,
         marginRight: 4,
         marginTop: 10,
@@ -154,6 +157,7 @@ const Styles = {
         borderColor: 'black',
         borderWidth: 1,
         borderStyle: "solid" as const,
+        borderRadius: 3,
         marginLeft: 4,
         marginRight: 4,
         marginTop: 10,

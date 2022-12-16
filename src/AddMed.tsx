@@ -30,7 +30,7 @@ function AddMed({onBackPress, editableItem}: addMedProps){
 
 
     return(
-        <View style={{backgroundColor: '#FFF380',height: '100%', width: '100%', flexDirection: 'column', justifyContent: 'space-between'}}>
+        <View style={{backgroundColor: '#ecf4f4',height: '100%', width: '100%', flexDirection: 'column', justifyContent: 'space-between'}}>
             <ScreenHeader title={editableItem ? 'Edit Med' : 'Add Med'}/>
 
 
@@ -54,7 +54,7 @@ function AddMed({onBackPress, editableItem}: addMedProps){
                             await updateMedList(newMed);
                             onBackPress();
                         }}}/>
-                        
+
                 <ScreenFooter leftButtonTitle="Back" leftButtonPress={()=> onBackPress()}/>
             </View>
         </View>
