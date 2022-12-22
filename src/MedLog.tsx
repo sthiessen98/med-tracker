@@ -50,7 +50,7 @@ function ListMeds({ onBackPress }: medLogProps) {
 
     const renderItem = ({item}: medProps)=>(
         <View>
-            <MedLogItem item={item} onPress={setCurrEditLog}/>
+            <MedLogItem item={item} onPress={setCurrEditLog} refetch={()=> refetchData()}/>
             {item === currEditLog && (
                 <MedLogEditItem item={item} onClose={()=> setCurrEditLog(null)} 
                 onSubmit={async (timestamp: number)=> {
