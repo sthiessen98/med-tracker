@@ -2,7 +2,6 @@ import React from "react";
 import { Alert, Text, TouchableOpacity, View } from "react-native";
 import { currMedInstance, medLogInstance } from "./App";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Appearance } from "react-native";
 import uuid from 'react-native-uuid';
 
 interface MedListItemProps {

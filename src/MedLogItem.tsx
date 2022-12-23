@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React from "react";
-import { Alert, Button, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Text, TouchableOpacity, View } from "react-native";
 import { Appearance } from "react-native";
 import { medLogInstance } from "./App";
 
@@ -12,7 +12,7 @@ interface MedLogItemProps {
 
 function MedListItem({item, onPress, refetch}: MedLogItemProps){
 
-    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
  
     const showDeleteConfirmation = (log: medLogInstance) => {
         Alert.alert(
