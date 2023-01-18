@@ -98,7 +98,7 @@ function AddMed({onBackPress, editableItem}: addMedProps){
                             )}
                             </View>
                             <View style={Styles.viewStyle}>
-                                <Text style={Styles.textStyle}>Max Dosage:</Text>
+                                <Text style={Styles.textStyle}>Max Dosage(Optional):</Text>
                                 <TextInput style={Styles.textInput}
                                 onChangeText={handleChange('maxDosage')}
                                 value={values.maxDosage}
@@ -108,7 +108,7 @@ function AddMed({onBackPress, editableItem}: addMedProps){
                                 <Text style={Styles.errorText}>{errors.maxDosage}</Text>
                             )}
                             <View style={Styles.viewStyle}>
-                                <Text style={Styles.textStyle}>Time Between Doses(Hours):</Text>
+                                <Text style={Styles.textStyle}>Time Between Doses(Hours)(Optional):</Text>
                                 <TextInput style={Styles.textInput}
                                 onChangeText={handleChange('interval')}
                                 value={values.interval}

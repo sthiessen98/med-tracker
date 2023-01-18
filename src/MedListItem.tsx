@@ -14,7 +14,8 @@ interface MedListItemProps {
 function MedListItem({med, logs, refetch, onEditPress}: MedListItemProps){
     const currentTime = new Date();
     const cutOffTime = new Date(currentTime.setHours(currentTime.getHours()- (med?.doseInterval ?? 0)));
-    const takenRecently: boolean = Boolean(logs.filter((log) => new Date(log.time).toISOString() > cutOffTime.toISOString()).length && med?.doseInterval);
+    const doseTakenRecently: number = logs.filter((log) => new Date(log.time).toISOString() > cutOffTime.toISOString()).reduce((partialSum, a)=> partialSum + a.dose, 0);
+    const takenRecently = Boolean(doseTakenRecently >= (med?.maxDosage ?? 0) && med?.maxDosage && med?.doseInterval);
 
 
     const addMedLog = async (newLog: medLogInstance)=> {
