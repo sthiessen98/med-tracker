@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { Appearance, Button, SafeAreaView, Text, TextInput, View } from "react-native";
+import { Button, Text, TextInput, View } from "react-native";
 import uuid from 'react-native-uuid';
 import { currMedInstance } from "./App";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -144,6 +143,7 @@ const Styles = {
     },
     textInput: {
         color: 'black',
+        height: 40,
         backgroundColor: 'grey',
         paddingLeft: 5, 
         marginLeft: 5, 
