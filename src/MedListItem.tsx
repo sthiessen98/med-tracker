@@ -17,7 +17,6 @@ function MedListItem({med, logs, refetch, onEditPress}: MedListItemProps){
     const doseTakenRecently: number = logs.filter((log) => new Date(log.time).toISOString() > cutOffTime.toISOString()).reduce((partialSum, a)=> partialSum + a.dose, 0);
     const takenRecently = Boolean(doseTakenRecently >= (med?.maxDosage ?? 0) && med?.maxDosage && med?.doseInterval);
 
-
     const addMedLog = async (newLog: medLogInstance)=> {
         const jsonValue = await AsyncStorage.getItem('currentMedLog');
         const medLog: medLogInstance[] = jsonValue !== null ? JSON.parse(jsonValue) : [];
@@ -56,10 +55,15 @@ function MedListItem({med, logs, refetch, onEditPress}: MedListItemProps){
         await AsyncStorage.setItem('currentMeds', updatedMedsJson);
         refetch();
     }
+
+    //Dynamic Tailwind Styling
+    const medListStyle = `flex-row justify-center align-center 
+        ${takenRecently ? 'bg-red-600' : 'bg-emerald-600'} 
+        h-[50px] p-2.5 mx-1 mt-2 border rounded-md`;
     
     return(
-        <View style={{flexDirection: 'row'}}>
-            <TouchableOpacity style={{flex: 6}} onPress={async ()=>{
+        <View className='flex-row'>
+            <TouchableOpacity className='basis-3/5' onPress={async ()=>{
                             const log: medLogInstance = {
                                 id: uuid.v4().toString(),
                                 medId: med.id,
@@ -69,99 +73,28 @@ function MedListItem({med, logs, refetch, onEditPress}: MedListItemProps){
                             };
                             await addMedLog(log);
                         }}> 
-                <View style={takenRecently ? Styles.warningViewStyle : Styles.viewStyle}>
-                    <Text style={Styles.textStyle}>{med.name} - </Text>
-                    <Text style={Styles.minorTextStyle}> {med.dose}mg</Text>
+                <View className={medListStyle}>
+                    <Text className="text-white text-lg text-center">{med.name} - </Text>
+                    <Text className="text-white text-sm text-center pt-1"> {med.dose}mg</Text>
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity style={{flex: 2}} onPress={()=> {
+            <TouchableOpacity className='basis-1/5' onPress={()=> {
                 onEditPress(med);
             }}>
-                <View style={Styles.editViewStyle}>
-                    <Text style={Styles.minorTextStyle}>Edit </Text>
+                <View className="justify-center bg-orange-600 h-[50px] p-2.5 mx-1 mt-2 border rounded-md">
+                    <Text className="text-white text-sm text-center">Edit </Text>
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity style={{flex: 2}} onPress={()=> {
+            <TouchableOpacity className='basis-1/5' onPress={()=> {
                 showDeleteConfirmation(med);
             }}>
-                <View style={Styles.deleteViewStyle}>
-                    <Text style={Styles.minorTextStyle}>Delete </Text>
+                <View className="justify-center bg-red-600 h-[50px] p-2.5 mx-1 mt-2 border rounded-md">
+                    <Text className="text-white text-sm text-center">Delete </Text>
                 </View>
             </TouchableOpacity>
         </View>
     );
 
-}
-
-const Styles = {
-    textStyle: {
-        color: 'white', 
-        fontSize: 22,        
-    },
-    minorTextStyle: {
-        color: 'white', 
-        fontSize: 14, 
-    },
-    viewStyle: {
-        backgroundColor: '#64a460',
-        flexDirection: 'row' as const,
-        height: 50,
-        justifyContent: "center" as const,
-        alignItems: 'center' as const,
-        padding: 10,
-        borderColor: 'black',
-        borderWidth: 1,
-        borderStyle: "solid" as const,
-        borderRadius: 7,
-        marginLeft: 4,
-        marginRight: 4,
-        marginTop: 10,
-    },
-    warningViewStyle: {
-        backgroundColor: '#b30900',
-        flexDirection: 'row' as const,
-        height: 50,
-        justifyContent: "center" as const,
-        alignItems: 'center' as const,
-        padding: 10,
-        borderColor: 'black',
-        borderWidth: 1,
-        borderStyle: "solid" as const,
-        borderRadius: 7,
-        marginLeft: 4,
-        marginRight: 4,
-        marginTop: 10,
-    },
-    deleteViewStyle: {
-        backgroundColor: '#BC5A41',
-        flexDirection: 'row' as const,
-        height: 50,
-        justifyContent: "center" as const,
-        alignItems: 'center' as const,
-        padding: 10,
-        borderColor: 'black',
-        borderWidth: 1,
-        borderStyle: "solid" as const,
-        borderRadius: 3,
-        marginLeft: 4,
-        marginRight: 4,
-        marginTop: 10,
-    },
-    editViewStyle: {
-        backgroundColor: 'orange',
-        flexDirection: 'row' as const,
-        height: 50,
-        justifyContent: "center" as const,
-        alignItems: 'center' as const,
-        padding: 10,
-        borderColor: 'black',
-        borderWidth: 1,
-        borderStyle: "solid" as const,
-        borderRadius: 3,
-        marginLeft: 4,
-        marginRight: 4,
-        marginTop: 10,
-    }
 }
 
 export default MedListItem;
