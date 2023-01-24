@@ -46,16 +46,16 @@ function MedListItem({item, onPress, refetch}: MedLogItemProps){
 
     return(
     <View style={{flexDirection: 'row'}}>
-         <View style={Styles.viewStyle}>
-            <TouchableOpacity style={Styles.touchableStyle} onPress={()=> onPress(item)}>
-            <Text style={Styles.textStyle}>{item.name} </Text>
-                <Text style={{color: Appearance.getColorScheme() === 'dark' ? 'white' : 'black', fontSize: 14}}>| {item.dose}mg |</Text>
-                <Text style={{color: Appearance.getColorScheme() === 'dark' ? 'white' : 'black', fontSize: 14}}> {item.time.getHours() < 10 ? 0 : ''}{item.time.getHours()}:{item.time.getMinutes() < 10 ? 0 : ''}{item.time.getMinutes()}   {monthNames[item.time.getMonth()]} {item.time.getDate()}</Text>
+         <View className='bg-emerald-600 flex-row justify-center align-center basis-4/5 border rounded p-2 mx-1 mt-2 h-[55px]'>
+            <TouchableOpacity className='flex-row h-[50px] justify-center align-center p-2' onPress={()=> onPress(item)}>
+            <Text className='text-white text-xl'>{item.name} </Text>
+                <Text className='text-white text-sm pt-1'>| {item.dose}mg |</Text>
+                <Text className='text-white text-sm pt-1'> {item.time.getHours() < 10 ? 0 : ''}{item.time.getHours()}:{item.time.getMinutes() < 10 ? 0 : ''}{item.time.getMinutes()}   {monthNames[item.time.getMonth()]} {item.time.getDate()}</Text>
             </TouchableOpacity>
         </View>
-        <View style={Styles.deleteViewStyle}>
-            <TouchableOpacity style={Styles.touchableStyle} onPress={()=> showDeleteConfirmation(item)}>
-                <Text style={{color: 'white', fontSize: 20}}>X</Text>
+        <View className='bg-red-700 flex-row justify-center align-center h-[50px] px-3 border rounded-full mx-1 mt-2'>
+            <TouchableOpacity className='flex-row h-[55px] justify-center align-center p-2' onPress={()=> showDeleteConfirmation(item)}>
+                <Text className='text-white text-lg'>X</Text>
             </TouchableOpacity>
         </View>
     </View>
@@ -64,10 +64,6 @@ function MedListItem({item, onPress, refetch}: MedLogItemProps){
 }
 
 const Styles = {
-    textStyle: {
-        color: Appearance.getColorScheme() === 'dark' ? 'white' : 'black', 
-        fontSize: 22,        
-    },
     viewStyle: {
         backgroundColor: '#64a460',
         flexDirection: 'row' as const,

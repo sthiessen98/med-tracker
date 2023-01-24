@@ -37,18 +37,18 @@ function ListMeds({ onAddPress, onLogPress, onEditPress}: medListProps) {
     },[]);
 
     return(
-        <View style={{backgroundColor: '#ecf4f4', height: '100%', width: '100%', flexDirection: 'column', justifyContent: 'space-between'}}>
+        <View className='bg-white h-full w-full flex-col justify-start align-stretch'>
             <View>
                 <ScreenHeader title={'Current Meds'}/>
             </View>
-            <View style={{flex: 1}}>
+            <View className="flex-grow basis-9/10">
                 <FlatList
                 data={medList}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.id}
                 />
             </View>
-            <View style={{flex: 1, justifyContent: 'flex-end'}}>
+            <View className="basis-1/10 flex-end">
                 <ScreenFooter leftButtonTitle="Logs" leftButtonPress={()=> onLogPress()} rightButtonTitle='Add' rightButtonPress={()=> onAddPress()}/>
             </View>              
         </View>
