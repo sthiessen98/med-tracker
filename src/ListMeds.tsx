@@ -37,11 +37,11 @@ function ListMeds({ onAddPress, onLogPress, onEditPress}: medListProps) {
     },[]);
 
     return(
-        <View className='bg-white h-full w-full flex-col justify-start align-stretch'>
+        <View className='bg-gray-200 h-full w-full flex-col justify-start align-stretch'>
             <View>
                 <ScreenHeader title={'Current Meds'}/>
             </View>
-            <View className="flex-grow basis-9/10">
+            <View className="basis-9/10 flex-grow">
                 <FlatList
                 data={medList}
                 renderItem={renderItem}

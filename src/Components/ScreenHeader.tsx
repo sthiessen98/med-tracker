@@ -6,8 +6,8 @@ interface IScreenHeaderProps{
 
 function ScreenHeader({title}: IScreenHeaderProps){
     return(
-    <View className='flex-row justify-center bg-black h-[40px] w-full mb-2 border'>
-        <Text className='align-center text-xl text-white p-2'>{title}</Text>
+    <View className='flex-row justify-center bg-emerald-500 h-[40px] w-full mb-2'>
+        <Text className='align-center text-xl text-black p-2'>{title}</Text>
     </View>
     );
 }

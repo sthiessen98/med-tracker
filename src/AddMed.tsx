@@ -50,7 +50,7 @@ function AddMed({onBackPress, editableItem}: addMedProps){
     });
 
     return(
-        <View style={{backgroundColor: '#ecf4f4',height: '100%', width: '100%', flexDirection: 'column', justifyContent: 'space-between'}}>
+        <View className='bg-slate-200 flex-col justify-between h-full w-full'>
             <ScreenHeader title={editableItem ? 'Edit Med' : 'Add Med'}/>
                 <Formik
                 initialValues={{
@@ -74,89 +74,61 @@ function AddMed({onBackPress, editableItem}: addMedProps){
                         }
                 }}>
                     {({ handleChange, handleSubmit, values, errors }) => (
-                    <View style={{flexDirection:'column', justifyContent: 'space-between', height: '80%'}}>
-                        <View style={{justifyContent: 'flex-start'}}>
-                            <View style={{flexDirection: 'column'}}>
-                                <Text style={Styles.textStyle}>Drug Name:</Text>
-                                <TextInput style={Styles.textInput}
+                    <View className='flex-col justify-between h-5/6 bg-slate-200'>
+                        <View className='justify-start'>
+                            <View className='flex-col'>
+                                <Text className='text-black text-sm pt-1 ml-1'>Drug Name:</Text>
+                                <TextInput className='text-black bg-white h-[40px] pl-1 mx-1 border'
                                 onChangeText={handleChange('name')}
                                 value={values.name}
                                 />
                             {errors.name && (
-                                <Text style={Styles.errorText}>{errors.name}</Text>
+                                <Text className='text-sm text-red-700 pl-1 mx-1'>{errors.name}</Text>
                             )}
                             </View>
-                            <View style={Styles.viewStyle}>
-                                <Text style={Styles.textStyle}>Dosage:</Text>
-                                <TextInput style={Styles.textInput}
+                            <View className='flex-col'>
+                                <Text className='text-black text-sm pt-1 ml-1'>Dosage:</Text>
+                                <TextInput className='text-black bg-white h-[40px] pl-1 mx-1 border'
                                 onChangeText={handleChange('dosage')}
                                 value={values.dosage}
                                 />
                             {errors.dosage && (
-                                <Text style={Styles.errorText}>{errors.dosage}</Text>
+                                <Text className='text-sm text-red-700 pl-1 mx-1'>{errors.dosage}</Text>
                             )}
                             </View>
-                            <View style={Styles.viewStyle}>
-                                <Text style={Styles.textStyle}>Max Dosage(Optional):</Text>
-                                <TextInput style={Styles.textInput}
+                            <View className='flex-col'>
+                                <Text className='text-black text-sm pt-1 ml-1'>Max Dosage(Optional):</Text>
+                                <TextInput className='text-black bg-white h-[40px] pl-1 mx-1 border'
                                 onChangeText={handleChange('maxDosage')}
                                 value={values.maxDosage}
                                 />
                             </View>
                             {errors.maxDosage && (
-                                <Text style={Styles.errorText}>{errors.maxDosage}</Text>
+                                <Text className='text-sm text-red-700 pl-1 mx-1'>{errors.maxDosage}</Text>
                             )}
-                            <View style={Styles.viewStyle}>
-                                <Text style={Styles.textStyle}>Time Between Doses(Hours)(Optional):</Text>
-                                <TextInput style={Styles.textInput}
+                            <View className='flex-col'>
+                                <Text className='text-black text-sm pt-1 ml-1'>Time Between Doses(Hours)(Optional):</Text>
+                                <TextInput className='text-black bg-white h-[40px] pl-1 mx-1 border'
                                 onChangeText={handleChange('interval')}
                                 value={values.interval}
                                 />
                             {errors.interval && (
-                                <Text style={Styles.errorText}>{errors.interval}</Text>
+                                <Text className='text-sm text-red-700 pl-1 mx-1'>{errors.interval}</Text>
                             )}
                             </View>
                         </View>
-                        <View style={{justifyContent: 'flex-end', backgroundColor: 'red', marginLeft: 20, marginRight: 20, elevation: 15}}>
+                        <View className='bg-slate-300 justify-end mx-3 shadow}'>
                             <Button color={'#007560'} onPress={handleSubmit} title="Submit" />
                         </View>
                      </View>
      )}          
                 </Formik>
 
-            <View style={{flex: 1, justifyContent: 'flex-end'}}>
+            <View className='justify-end'>
                 <ScreenFooter leftButtonTitle="Back" leftButtonPress={()=> onBackPress()}/>
             </View>
         </View>
     );
-}
-
-const Styles = {
-    textStyle: {
-        marginLeft: 5,
-        color: 'black',
-         fontSize: 12,
-         paddingTop: 5
-        },
-    viewStyle: {
-        flexDirection: 'column' as const,
-    },
-    textInput: {
-        color: 'black',
-        height: 40,
-        backgroundColor: 'grey',
-        paddingLeft: 5, 
-        marginLeft: 5, 
-        marginRight: 5,
-        border: 'black',
-        borderWidth: 1,
-    },
-    errorText: {
-        color: 'red',
-        paddingLeft: 5,
-        marginLeft: 5,
-        marginRight: 5,
-    }
 }
 
 export default AddMed;
