@@ -1,4 +1,4 @@
-import { Button, Text, TextInput, View } from "react-native";
+import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 import uuid from 'react-native-uuid';
 import { currMedInstance } from "./App";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -50,7 +50,7 @@ function AddMed({onBackPress, editableItem}: addMedProps){
     });
 
     return(
-        <View className='bg-slate-200 flex-col justify-between h-full w-full'>
+        <View className='bg-background flex-col justify-between h-full w-full' style={{elevation: 4}}>
             <ScreenHeader title={editableItem ? 'Edit Med' : 'Add Med'}/>
                 <Formik
                 initialValues={{
@@ -74,7 +74,7 @@ function AddMed({onBackPress, editableItem}: addMedProps){
                         }
                 }}>
                     {({ handleChange, handleSubmit, values, errors }) => (
-                    <View className='flex-col justify-between h-5/6 bg-slate-200'>
+                    <View className='flex-col justify-between h-3/4 bg-background'>
                         <View className='justify-start'>
                             <View className='flex-col'>
                                 <Text className='text-black text-sm pt-1 ml-1'>Drug Name:</Text>
@@ -117,8 +117,8 @@ function AddMed({onBackPress, editableItem}: addMedProps){
                             )}
                             </View>
                         </View>
-                        <View className='bg-slate-300 justify-end mx-3 shadow}'>
-                            <Button color={'#007560'} onPress={handleSubmit} title="Submit" />
+                        <View className='bg-background justify-end mx-9' style={styles.box}>
+                            <Button color={'#10b981'} onPress={handleSubmit} title="Submit" />
                         </View>
                      </View>
      )}          
@@ -131,4 +131,15 @@ function AddMed({onBackPress, editableItem}: addMedProps){
     );
 }
 
+const styles = StyleSheet.create({
+    box: {
+        // ...
+        shadowColor: '#000000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.5,
+        shadowRadius: 2,
+        elevation: 9,
+      },
+  });
+  
 export default AddMed;

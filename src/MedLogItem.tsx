@@ -46,7 +46,7 @@ function MedListItem({item, onPress, refetch}: MedLogItemProps){
 
     return(
     <View style={{flexDirection: 'row'}}>
-         <View className='bg-emerald-600 flex-row justify-center align-center basis-4/5 border rounded p-2 mx-1 mt-2 h-[55px]'>
+         <View className='bg-primary flex-row justify-center align-center basis-4/5 border rounded p-2 mx-1 mt-2 h-[55px]'>
             <TouchableOpacity className='flex-row h-[50px] justify-center align-center p-2' onPress={()=> onPress(item)}>
             <Text className='text-white text-xl'>{item.name} </Text>
                 <Text className='text-white text-sm pt-1'>| {item.dose}mg |</Text>

@@ -37,7 +37,7 @@ function ListMeds({ onAddPress, onLogPress, onEditPress}: medListProps) {
     },[]);
 
     return(
-        <View className='bg-gray-200 h-full w-full flex-col justify-start align-stretch'>
+        <View className='bg-background h-full w-full flex-col justify-start align-stretch'>
             <View>
                 <ScreenHeader title={'Current Meds'}/>
             </View>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert, Text, TouchableOpacity, View } from "react-native";
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { currMedInstance, medLogInstance } from "./App";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import uuid from 'react-native-uuid';
@@ -58,7 +58,7 @@ function MedListItem({med, logs, refetch, onEditPress}: MedListItemProps){
 
     //Dynamic Tailwind Styling
     const medListStyle = `flex-row justify-center align-center 
-        ${takenRecently ? 'bg-red-600' : 'bg-emerald-600'} 
+        ${takenRecently ? 'bg-red-600' : 'bg-primary'} 
         h-[50px] p-2.5 mx-1 mt-2 border rounded-md`;
     
     return(
@@ -82,7 +82,7 @@ function MedListItem({med, logs, refetch, onEditPress}: MedListItemProps){
                 onEditPress(med);
             }}>
                 <View className="justify-center bg-orange-600 h-[50px] p-2.5 mx-1 mt-2 border rounded-md">
-                    <Text className="text-white text-sm text-center">Edit </Text>
+                    <Text className="text-white text-sm text-center shadow">Edit </Text>
                 </View>
             </TouchableOpacity>
             <TouchableOpacity className='basis-1/5' onPress={()=> {
@@ -96,5 +96,6 @@ function MedListItem({med, logs, refetch, onEditPress}: MedListItemProps){
     );
 
 }
+
 
 export default MedListItem;
