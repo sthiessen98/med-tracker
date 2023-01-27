@@ -4,8 +4,10 @@ import { currMedInstance } from "./App";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ScreenHeader from "./Components/ScreenHeader";
 import ScreenFooter from "./Components/ScreenFooter";
-import { Formik } from "formik";
+import { Field, Formik } from "formik";
 import * as yup from "yup";
+import SelectableColor from "./Components/SelectableColor";
+import ColorSelector from "./Components/ColorSelector";
 
 interface addMedProps {
     editableItem?: currMedInstance;
@@ -47,6 +49,11 @@ function AddMed({onBackPress, editableItem}: addMedProps){
             .nullable()
             .integer('Please enter a whole number')
             .moreThan(0, 'Please enter a number greater than 0'),
+        color: yup
+            .string()
+            .required('Please select a color'),
+        allowNotifications: yup
+            .boolean()
     });
 
     return(
@@ -57,7 +64,10 @@ function AddMed({onBackPress, editableItem}: addMedProps){
                     name: editableItem?.name ?? '', 
                     dosage: editableItem?.dose?.toString() ?? '0', 
                     maxDosage: editableItem?.maxDosage?.toString() ?? '', 
-                    interval: editableItem?.doseInterval?.toString() ?? ''
+                    interval: editableItem?.doseInterval?.toString() ?? '',
+                    color: editableItem?.color ?? '',
+                    allowNotifications: editableItem?.allowNotifications ?? false,
+
                 }}
                 validationSchema={medValidationSchema}
                 onSubmit={async (values)=> {
@@ -68,12 +78,13 @@ function AddMed({onBackPress, editableItem}: addMedProps){
                                 dose: parseInt(values.dosage),
                                 maxDosage: parseInt(values.maxDosage) > 0 ? parseInt(values.maxDosage) : undefined,
                                 doseInterval: parseInt(values.interval) > 0 ? parseInt(values.interval) : undefined,
+                                color:values.color ?? undefined,
                             }
                             await updateMedList(newMed);
                             onBackPress();
                         }
                 }}>
-                    {({ handleChange, handleSubmit, values, errors }) => (
+                    {({ handleChange, handleSubmit, setFieldValue, values, errors }) => (
                     <View className='flex-col justify-between h-3/4 bg-background'>
                         <View className='justify-start'>
                             <View className='flex-col'>
@@ -114,6 +125,13 @@ function AddMed({onBackPress, editableItem}: addMedProps){
                                 />
                             {errors.interval && (
                                 <Text className='text-sm text-red-700 pl-1 mx-1'>{errors.interval}</Text>
+                            )}
+                            </View>
+                            <View className='flex-col p-1'>
+                                <Text className='text-black text-sm pt-1 ml-1'>Display Color:</Text>
+                                <ColorSelector preselectedColor={editableItem?.color} onPress={(color)=> setFieldValue('color', color)}/>
+                                {errors.color && (
+                                <Text className='text-sm text-red-700 pl-1 mx-1'>{errors.color}</Text>
                             )}
                             </View>
                         </View>

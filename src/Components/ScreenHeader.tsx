@@ -7,7 +7,7 @@ interface IScreenHeaderProps{
 function ScreenHeader({title}: IScreenHeaderProps){
     return(
     <View className='flex-row justify-center bg-primary h-[60px] w-full mb-2' style={styles.box}>
-        <Text className='align-center text-2xl font-bold text-black p-2 mt-1'>{title}</Text>
+        <Text className='align-center text-2xl font-bold text-white p-2 mt-1'>{title}</Text>
     </View>
     );
 }

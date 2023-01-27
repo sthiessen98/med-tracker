@@ -31,6 +31,8 @@ export interface currMedInstance {
   dose: number;
   maxDosage?: number;
   doseInterval?: number;
+  color?: string;
+  allowNotifications?: boolean;
 }
 enum screens {
   list = 'list',
