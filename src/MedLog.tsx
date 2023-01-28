@@ -6,6 +6,7 @@ import MedLogItem from "./MedLogItem";
 import ScreenHeader from "./Components/ScreenHeader";
 import ScreenFooter from "./Components/ScreenFooter";
 import MedLogEditItem from "./MedLogEditItem";
+import ListSeperator from "./Components/ListSeperator";
 
 
 interface medProps {
@@ -82,6 +83,7 @@ function ListMeds({ onBackPress }: medLogProps) {
             data={medLog.sort((a,b)=> a?.time?.getTime() < b?.time?.getTime() ? 1 : -1)}
             renderItem={renderItem}
             keyExtractor={(item) => item.id}
+            ItemSeparatorComponent={ListSeperator}
             />
             <ScreenFooter leftButtonTitle="Back" leftButtonPress={()=> onBackPress()}/>
         </View>

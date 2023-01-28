@@ -17,6 +17,16 @@ function MedListItem({med, logs, refetch, onEditPress}: MedListItemProps){
     const doseTakenRecently: number = logs.filter((log) => new Date(log.time).toISOString() > cutOffTime.toISOString()).reduce((partialSum, a)=> partialSum + a.dose, 0);
     const takenRecently = Boolean(doseTakenRecently >= (med?.maxDosage ?? 0) && med?.maxDosage && med?.doseInterval);
 
+    
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
+    const lastTaken: medLogInstance | undefined = logs.length ? logs?.sort((a,b)=> a.time > b.time ? 1 : -1)?.[0] : undefined;
+    let lastTakenDisplay: string;
+    if(lastTaken?.time !== undefined){
+        const lastTakenDate= new Date(lastTaken.time);
+        lastTakenDisplay = `Taken: ${lastTakenDate.getHours() < 10 ? 0 : ''}${lastTakenDate.getHours()}:${lastTakenDate.getMinutes() < 10 ? 0 : ''}${lastTakenDate.getMinutes()} ${monthNames[lastTakenDate.getMonth()]} ${lastTakenDate.getDate()}`;
+    }else{
+        lastTakenDisplay = '  ';
+    }
     const addMedLog = async (newLog: medLogInstance)=> {
         const jsonValue = await AsyncStorage.getItem('currentMedLog');
         const medLog: medLogInstance[] = jsonValue !== null ? JSON.parse(jsonValue) : [];
@@ -63,7 +73,7 @@ function MedListItem({med, logs, refetch, onEditPress}: MedListItemProps){
     
     return(
         <View className='flex-row'>
-            <TouchableOpacity className='basis-3/5' onPress={async ()=>{
+            <TouchableOpacity className='flex-row w-full h-[60px]' onPress={async ()=>{
                             const log: medLogInstance = {
                                 id: uuid.v4().toString(),
                                 medId: med.id,
@@ -73,25 +83,25 @@ function MedListItem({med, logs, refetch, onEditPress}: MedListItemProps){
                             };
                             await addMedLog(log);
                         }}> 
-                <View className={medListStyle}>
-                    <Text className="text-white text-lg text-center">{med.name} - </Text>
-                    <Text className="text-white text-sm text-center pt-1"> {med.dose}mg</Text>
+            <View className='border-white border-2 rounded-full h-[45px] w-[45px] mt-1 ml-1 mb-2' style={{backgroundColor: med.color}}/>
+            <View className='basis-2/5 w-full h-full mx-1'>
+                <View className='flex-col h-full items-start'>
+                    <Text className='basis-1/2 text-black text-lg'>{med.name}</Text>
+                    <Text className='basis-1/2 text-black'>{med.dose}mg</Text>
                 </View>
-            </TouchableOpacity>
-            <TouchableOpacity className='basis-1/5' onPress={()=> {
-                onEditPress(med);
-            }}>
-                <View className="justify-center bg-orange-600 h-[50px] p-2.5 mx-1 mt-2 border rounded-md">
-                    <Text className="text-white text-sm text-center shadow">Edit </Text>
+
+            </View>
+            <View className='flex basis-2/5 w-full mx-1'>
+                <View className='flex-col items-end w-full h-full mr-1'>
+                    {!!lastTaken?.time && (
+                        <Text className='basis-1/2 text-black italic'>{lastTakenDisplay}</Text>
+                    )}
+                     <Text className='basis-1/2 text-red-500 text-x italic font-bold'>Do not take for 13:32</Text>
+
                 </View>
+            </View>
             </TouchableOpacity>
-            <TouchableOpacity className='basis-1/5' onPress={()=> {
-                showDeleteConfirmation(med);
-            }}>
-                <View className="justify-center bg-red-600 h-[50px] p-2.5 mx-1 mt-2 border rounded-md">
-                    <Text className="text-white text-sm text-center">Delete </Text>
-                </View>
-            </TouchableOpacity>
+
         </View>
     );
 

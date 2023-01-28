@@ -5,6 +5,7 @@ import MedListItem from "./MedListItem";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ScreenHeader from "./Components/ScreenHeader";
 import ScreenFooter from "./Components/ScreenFooter";
+import ListSeperator from "./Components/ListSeperator";
 
 
 interface medProps {
@@ -20,6 +21,7 @@ interface medListProps {
 function ListMeds({ onAddPress, onLogPress, onEditPress}: medListProps) {
     const [medList, setMedList] = useState<currMedInstance[]>([]);
     const [medLogs, setMedLogs] = useState<medLogInstance[]>([]);
+    const [editMode, setEditMode] = useState<Boolean>(false);
 
     const renderItem = ({item}: medProps)=>(
         <MedListItem med={item} logs={medLogs.filter((log)=> log.medId === item.id)} onEditPress={onEditPress} refetch={()=> refetchData()}/>
@@ -46,6 +48,7 @@ function ListMeds({ onAddPress, onLogPress, onEditPress}: medListProps) {
                 data={medList}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.id}
+                ItemSeparatorComponent={ListSeperator}
                 />
             </View>
             <View className="basis-1/10 flex-end">
