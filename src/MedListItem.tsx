@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { currMedInstance, medLogInstance } from "./App";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import uuid from 'react-native-uuid';
@@ -8,16 +8,19 @@ interface MedListItemProps {
     med: currMedInstance;
     logs: medLogInstance[];
     refetch(): void;
+    editMode: Boolean;
     onEditPress:(item: currMedInstance) => void;
 }
 
-function MedListItem({med, logs, refetch, onEditPress}: MedListItemProps){
+function MedListItem({med, logs, refetch, editMode, onEditPress}: MedListItemProps){
+
+    //Calculate if we've reached max dosage in allotted time frame
     const currentTime = new Date();
     const cutOffTime = new Date(currentTime.setHours(currentTime.getHours()- (med?.doseInterval ?? 0)));
     const doseTakenRecently: number = logs.filter((log) => new Date(log.time).toISOString() > cutOffTime.toISOString()).reduce((partialSum, a)=> partialSum + a.dose, 0);
     const takenRecently = Boolean(doseTakenRecently >= (med?.maxDosage ?? 0) && med?.maxDosage && med?.doseInterval);
 
-    
+    //Do we display Last Taken info
     const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
     const lastTaken: medLogInstance | undefined = logs.length ? logs?.sort((a,b)=> a.time > b.time ? 1 : -1)?.[0] : undefined;
     let lastTakenDisplay: string;
@@ -27,6 +30,7 @@ function MedListItem({med, logs, refetch, onEditPress}: MedListItemProps){
     }else{
         lastTakenDisplay = '  ';
     }
+
     const addMedLog = async (newLog: medLogInstance)=> {
         const jsonValue = await AsyncStorage.getItem('currentMedLog');
         const medLog: medLogInstance[] = jsonValue !== null ? JSON.parse(jsonValue) : [];
@@ -92,6 +96,12 @@ function MedListItem({med, logs, refetch, onEditPress}: MedListItemProps){
 
             </View>
             <View className='flex basis-2/5 w-full mx-1'>
+                {editMode && (
+                    <View className='flex-row'>
+                        <Button title="Edit" onPress={()=> onEditPress(med)}/>
+                        <Button title="Delete" onPress={()=> showDeleteConfirmation(med)}/>
+                    </View>
+                )}
                 <View className='flex-col items-end w-full h-full mr-1'>
                     {!!lastTaken?.time && (
                         <Text className='basis-1/2 text-black italic'>{lastTakenDisplay}</Text>

@@ -24,7 +24,7 @@ function ListMeds({ onAddPress, onLogPress, onEditPress}: medListProps) {
     const [editMode, setEditMode] = useState<Boolean>(false);
 
     const renderItem = ({item}: medProps)=>(
-        <MedListItem med={item} logs={medLogs.filter((log)=> log.medId === item.id)} onEditPress={onEditPress} refetch={()=> refetchData()}/>
+        <MedListItem med={item} logs={medLogs.filter((log)=> log.medId === item.id)} editMode={editMode} onEditPress={onEditPress} refetch={()=> refetchData()}/>
         );
 
     const refetchData = async() => {
@@ -41,7 +41,7 @@ function ListMeds({ onAddPress, onLogPress, onEditPress}: medListProps) {
     return(
         <View className='bg-background h-full w-full flex-col justify-start align-stretch'>
             <View>
-                <ScreenHeader title={'Current Meds'}/>
+                <ScreenHeader title={'Current Meds'} mode={editMode ? 'edit' : 'home'} onPress={()=> setEditMode(!editMode)}/>
             </View>
             <View className="basis-9/10 flex-grow">
                 <FlatList
