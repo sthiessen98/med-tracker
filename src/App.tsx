@@ -15,6 +15,8 @@ import {
 import ListMeds from './ListMeds';
 import AddMed from './AddMed';
 import MedLog from './MedLog';
+import Toast from 'react-native-toast-message';
+
 
 
 export interface medLogInstance {
@@ -55,6 +57,7 @@ function App(){
         }}
         onLogPress={()=> {setCurrentScreen(screens.log)}}
       />
+      <Toast/>
       </SafeAreaView>
     )
   }else if(currentScreen === screens.add){
@@ -78,7 +81,6 @@ function App(){
     );
 
   }
-  
 }
 
 export default App;

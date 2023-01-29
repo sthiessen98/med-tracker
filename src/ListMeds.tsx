@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import ScreenHeader from "./Components/ScreenHeader";
 import ScreenFooter from "./Components/ScreenFooter";
 import ListSeperator from "./Components/ListSeperator";
+import Toast from "react-native-toast-message";
 
 
 interface medProps {
@@ -23,8 +24,16 @@ function ListMeds({ onAddPress, onLogPress, onEditPress}: medListProps) {
     const [medLogs, setMedLogs] = useState<medLogInstance[]>([]);
     const [editMode, setEditMode] = useState<Boolean>(false);
 
+    const showToast = (med: currMedInstance) => {
+        Toast.show({
+          type: 'success',
+          text1: 'Log Added',
+          text2: `Successfully logged ${med.name} usage`
+        });
+      }
+      
     const renderItem = ({item}: medProps)=>(
-        <MedListItem med={item} logs={medLogs.filter((log)=> log.medId === item.id)} editMode={editMode} onEditPress={onEditPress} refetch={()=> refetchData()}/>
+        <MedListItem med={item} logs={medLogs.filter((log)=> log.medId === item.id)} editMode={editMode} onEditPress={onEditPress} refetch={()=> refetchData()} showToast={(med: currMedInstance)=> showToast(med)}/>
         );
 
     const refetchData = async() => {

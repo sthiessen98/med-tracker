@@ -9,11 +9,12 @@ interface MedListItemProps {
     med: currMedInstance;
     logs: medLogInstance[];
     refetch(): void;
+    showToast:(med: currMedInstance)=> void;
     editMode: Boolean;
     onEditPress:(item: currMedInstance) => void;
 }
 
-function MedListItem({med, logs, refetch, editMode, onEditPress}: MedListItemProps){
+function MedListItem({med, logs, refetch, showToast, editMode, onEditPress}: MedListItemProps){
 
     const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
 
@@ -50,6 +51,7 @@ function MedListItem({med, logs, refetch, editMode, onEditPress}: MedListItemPro
         const updatedMedLog = [...medLog, newLog];
         const updatedMedLogJson = JSON.stringify(updatedMedLog);
         await AsyncStorage.setItem('currentMedLog', updatedMedLogJson);
+        showToast(med);
         refetch();
     }
 
@@ -127,7 +129,7 @@ function MedListItem({med, logs, refetch, editMode, onEditPress}: MedListItemPro
                         <Text className='basis-1/2 text-black italic'>{lastTakenDisplay}</Text>
                      )}
                      {minutesToNextDose !== 0 && takenRecently && (
-                        <Text className='basis-1/2 text-red-500 text-x italic font-bold'>Do not take for {Math.floor(minutesToNextDose/60)}:{minutesToNextDose%60}</Text>
+                        <Text className='basis-1/2 text-red-500 text-x italic font-bold'>Do not take for {Math.floor(minutesToNextDose/60)}:{minutesToNextDose%60 < 10 ? '0':''}{minutesToNextDose%60}</Text>
                      )}
  
                  </View>

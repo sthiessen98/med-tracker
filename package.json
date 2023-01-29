@@ -17,6 +17,7 @@
     "react": "18.1.0",
     "react-native": "0.70.6",
     "react-native-fs": "^2.20.0",
+    "react-native-toast-message": "^2.1.5",
     "react-native-uuid": "^2.0.1",
     "react-native-vector-icons": "^9.2.0",
     "yup": "^0.32.11"
