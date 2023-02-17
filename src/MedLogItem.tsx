@@ -43,7 +43,6 @@ function MedListItem({item, onPress, refetch}: MedLogItemProps){
         await AsyncStorage.setItem('currentMedLog', updatedLogsJson);
         refetch();
     }
-    console.log(item?.color);
     return(
     <View className='flex-row'>
         <View className='border-white border-2 rounded-full h-[45px] w-[45px] mt-1 ml-1 mb-2' style={{backgroundColor: item?.color ?? '#FHGRGF'}}/>

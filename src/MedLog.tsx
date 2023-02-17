@@ -102,7 +102,7 @@ function ListMeds({ onBackPress }: medLogProps) {
                 const d: groupedLogs = {title: key, data: data[key].sort((a,b)=>b.time.getTime() - a.time.getTime())};
                 sectionData.push(d);
             });
-            return sectionData;
+            return sectionData.reverse();
         }
         return [];
     },[medLog]);
@@ -117,7 +117,7 @@ function ListMeds({ onBackPress }: medLogProps) {
             <ScreenHeader title={'Med Log'}/>
             <SectionList
             className='mx-2 bg-slate-100'
-            sections={groupedLogData.reverse()}
+            sections={groupedLogData}
             renderItem={renderItem}
             renderSectionHeader={({section: {title}}) => (
                 <MedLogGroupHeader dateString={title}/>
