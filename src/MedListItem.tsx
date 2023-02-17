@@ -99,6 +99,7 @@ function MedListItem({med, logs, refetch, showToast, editMode, onEditPress}: Med
                                 name: med.name,
                                 dose: med.dose,
                                 time: new Date(),
+                                color: med?.color,
                             };
                             await addMedLog(log);
                         }}> 

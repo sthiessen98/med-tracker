@@ -33,15 +33,11 @@ function AddMed({onBackPress, editableItem}: addMedProps){
             .required('Please enter the drug name'),
         dosage: yup
             .number()
-            .typeError('Please enter a whole number')
-            .integer('Please enter a whole number')
             .moreThan(0, 'Please enter a number greater than 0')
             .required('Please enter the drug dosage'),
         maxDosage: yup
             .number()
-            .typeError('Please enter a whole number')
             .nullable()
-            .integer('Please enter a whole number')
             .min(yup.ref('dosage')),
         doseInterval: yup
             .number()
@@ -75,7 +71,7 @@ function AddMed({onBackPress, editableItem}: addMedProps){
                         const newMed: currMedInstance = {
                                 id: editableItem ? editableItem.id : uuid.v4().toString(),
                                 name: values.name,
-                                dose: parseInt(values.dosage),
+                                dose: parseFloat(values.dosage),
                                 maxDosage: parseInt(values.maxDosage) > 0 ? parseInt(values.maxDosage) : undefined,
                                 doseInterval: parseInt(values.interval) > 0 ? parseInt(values.interval) : undefined,
                                 color:values.color ?? undefined,

@@ -25,6 +25,7 @@ export interface medLogInstance {
   name: string;
   time: Date;
   dose: number;
+  color?: string;
 }
 
 export interface currMedInstance {

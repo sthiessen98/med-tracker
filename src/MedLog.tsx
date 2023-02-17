@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { FlatList, View } from "react-native";
+import React, { useEffect, useMemo, useReducer, useState } from "react";
+import { SectionList, Text, View } from "react-native";
 import { medLogInstance } from "./App";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MedLogItem from "./MedLogItem";
@@ -7,6 +7,7 @@ import ScreenHeader from "./Components/ScreenHeader";
 import ScreenFooter from "./Components/ScreenFooter";
 import MedLogEditItem from "./MedLogEditItem";
 import ListSeperator from "./Components/ListSeperator";
+import MedLogGroupHeader from "./MedLogGroupHeader";
 
 
 interface medProps {
@@ -14,6 +15,11 @@ interface medProps {
 }
 interface medLogProps {
     onBackPress(): void;
+}
+
+interface groupedLogs{
+    title: string;
+    data: medLogInstance[];
 }
 
 
@@ -30,6 +36,7 @@ function ListMeds({ onBackPress }: medLogProps) {
         refetchData();
     }
 
+
     const refetchData = async() => {
         const response = await AsyncStorage.getItem('currentMedLog');
         if(response !== null){
@@ -41,6 +48,7 @@ function ListMeds({ onBackPress }: medLogProps) {
                     name: i.name,
                     dose: i.dose,
                     time: new Date(i.time),
+                    color: i?.color ?? undefined,
                 }
             });
             setMedLog(datedResults);
@@ -63,6 +71,7 @@ function ListMeds({ onBackPress }: medLogProps) {
                             name: originalLog.name,
                             dose: originalLog.dose,
                             time: new Date(timestamp),
+                            color: originalLog?.color ?? undefined,
                         }
                         await updateMedLogList(updatedLog);
                     }
@@ -71,19 +80,49 @@ function ListMeds({ onBackPress }: medLogProps) {
             )}
         </View>       
         );
+
+    const groupedLogData = useMemo(()=> {
+        if(!!medLog.length){
+            const data= medLog.reduce<Record<string, medLogInstance[]>>((acc, item)=> {
+                const key: string =
+                item.time.getFullYear().toString() + 
+                (item.time.getUTCMonth() < 10 ? '0' : '') +
+                item.time.getUTCMonth().toString() + 
+                (item.time.getUTCDate() < 10 ? '0' : '') +
+                item.time.getDate().toString();
+
+                if(!acc[key]){
+                    acc[key] = [];
+                }
+                acc[key].push(item);
+                return acc;
+            }, {});
+            let sectionData: groupedLogs[] = [];
+            Object.keys(data).forEach((key)=> {
+                const d: groupedLogs = {title: key, data: data[key].sort((a,b)=>b.time.getTime() - a.time.getTime())};
+                sectionData.push(d);
+            });
+            return sectionData;
+        }
+        return [];
+    },[medLog]);
     
     useEffect(()=> {
         refetchData();
     },[]);
+
     
     return(
         <View className='bg-white flex-col align-stretch h-full w-full'>
             <ScreenHeader title={'Med Log'}/>
-            <FlatList
-            data={medLog.sort((a,b)=> a?.time?.getTime() < b?.time?.getTime() ? 1 : -1)}
+            <SectionList
+            className='mx-2 bg-slate-100'
+            sections={groupedLogData.reverse()}
             renderItem={renderItem}
+            renderSectionHeader={({section: {title}}) => (
+                <MedLogGroupHeader dateString={title}/>
+              )}
             keyExtractor={(item) => item.id}
-            ItemSeparatorComponent={ListSeperator}
             />
             <ScreenFooter leftButtonTitle="Back" leftButtonPress={()=> onBackPress()}/>
         </View>
