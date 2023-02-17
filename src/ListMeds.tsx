@@ -48,11 +48,11 @@ function ListMeds({ onAddPress, onLogPress, onEditPress}: medListProps) {
     },[]);
 
     return(
-        <View className='bg-background h-full w-full flex-col justify-start align-stretch'>
+        <View className='bg-background h-screen w-screen flex-col justify-start align-stretch'>
             <View>
                 <ScreenHeader title={'Current Meds'} mode={editMode ? 'edit' : 'home'} onPress={()=> setEditMode(!editMode)}/>
             </View>
-            <View className="basis-9/10 flex-grow">
+            <View className="basis-4/5 flex-grow">
                 <FlatList
                 data={medList}
                 renderItem={renderItem}
