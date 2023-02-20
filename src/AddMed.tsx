@@ -67,7 +67,7 @@ function AddMed({onBackPress, editableItem}: addMedProps){
                 }}
                 validationSchema={medValidationSchema}
                 onSubmit={async (values)=> {
-                    if(values.name !== null && parseInt(values.dosage) > 0){
+                    if(values.name !== null && parseFloat(values.dosage) > 0){
                         const newMed: currMedInstance = {
                                 id: editableItem ? editableItem.id : uuid.v4().toString(),
                                 name: values.name,

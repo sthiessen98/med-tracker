@@ -9,7 +9,7 @@ interface IScreenFooterProps{
 
 function ScreenFooter({leftButtonTitle, leftButtonPress, rightButtonTitle, rightButtonPress}: IScreenFooterProps){
     return (
-    <View style={{ backgroundColor: 'black', alignItems: 'stretch',  flexDirection: 'row', justifyContent: 'space-between', height: 45 }}>
+    <View style={{ backgroundColor: 'black', alignItems: 'stretch',  flexDirection: 'row', justifyContent: 'space-between', height: 45}}>
         {!!leftButtonTitle && !!leftButtonPress && (
             <Button color={'#007560'} title={leftButtonTitle} onPress={()=> {
             leftButtonPress();
