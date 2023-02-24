@@ -36,7 +36,7 @@ function MedListItem({med, logs, refetch, showToast, editMode, onEditPress}: Med
     }
 
     //Do we display Last Taken info
-    const lastTaken: medLogInstance | undefined = logs.length ? logs?.sort((a,b)=> a.time > b.time ? 1 : -1)?.[0] : undefined;
+    const lastTaken: medLogInstance | undefined = logs.length ? logs?.sort((a,b)=> a.time > b.time ? -1 : 1)?.[0] : undefined;
     let lastTakenDisplay: string;
     if(lastTaken?.time !== undefined){
         const lastTakenDate= new Date(lastTaken.time);
