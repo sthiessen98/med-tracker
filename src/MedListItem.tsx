@@ -26,7 +26,9 @@ function MedListItem({med, logs, refetch, showToast, editMode, onEditPress}: Med
 
     //Calculate time to when we can take next dose
     let minutesToNextDose: number;
-    const oldestDose =  logs.filter((log) => new Date(log.time).toISOString() > cutOffTime.toISOString()).sort((a,b)=> a.time > b.time ? 1 : -1)?.[0] ?? undefined;
+    const maxDoses = (med?.maxDosage ?? 0) / med.dose;
+    const filteredSortedLogs = logs.filter((log) => new Date(log.time).toISOString() > cutOffTime.toISOString()).sort((a,b)=> a.time > b.time ? 1 : -1);
+    const oldestDose =  filteredSortedLogs.slice(filteredSortedLogs?.length - maxDoses, filteredSortedLogs?.length)?.[0] ?? undefined;
 
     if(oldestDose !== undefined){
         const oldestDoseDateDiff = new Date(oldestDose.time).getTime()- cutOffTime.getTime();
