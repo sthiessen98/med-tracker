@@ -82,8 +82,12 @@ function ListMeds({ onBackPress }: medLogProps) {
         );
 
     const groupedLogData = useMemo(()=> {
-        if(!!medLog.length){
-            const data= medLog.reduce<Record<string, medLogInstance[]>>((acc, item)=> {
+        let cutoffDate = new Date();
+        cutoffDate.setMonth(cutoffDate.getMonth()-1);
+        cutoffDate.setDate(1);
+        const filteredMedLogData = medLog.filter((log)=> log.time.getTime() > cutoffDate.getTime());
+        if(!!filteredMedLogData.length){
+            const data= filteredMedLogData.reduce<Record<string, medLogInstance[]>>((acc, item)=> {
                 const key: string =
                 item.time.getFullYear().toString() + 
                 (item.time.getUTCMonth() < 10 ? '0' : '') +
