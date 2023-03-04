@@ -82,6 +82,7 @@ function ListMeds({ onBackPress }: medLogProps) {
         );
 
     const groupedLogData = useMemo(()=> {
+        //Med Log will show current and previous months' logs, organized by date
         let cutoffDate = new Date();
         cutoffDate.setMonth(cutoffDate.getMonth()-1);
         cutoffDate.setDate(1);
