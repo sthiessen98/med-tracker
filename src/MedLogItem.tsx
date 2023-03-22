@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React from "react";
-import { Alert, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Pressable, Text, View } from "react-native";
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import { medLogInstance } from "./App";
 
@@ -55,14 +55,14 @@ function MedListItem({item, onPress, refetch}: MedLogItemProps){
 
         <View className='flex basis-2/5 w-full mx-1'>
             <View className='flex-row justify-end space-x-2'>
-                <TouchableOpacity className='items-center flex-col w-[55px] bg-orange-300 border-2 rounded-lg p-1' style={{elevation: 6}} onPress={()=> onPress(item)}>
+                {<Pressable className='items-center flex-col w-[55px] bg-orange-300 border-2 rounded-lg p-1' style={{elevation: 6}} onPress={()=> onPress(item)}>
                     <EntypoIcon name='edit' size={20} color="black"/> 
                     <Text className='text-black text-sm'>Edit</Text>    
-                </TouchableOpacity>
-                <TouchableOpacity className='items-center flex-col w-[55px] bg-red-500 border-2 rounded-lg p-1' style={{elevation: 6}} onPress={()=> showDeleteConfirmation(item)}>
+                </Pressable>}
+                <Pressable className='items-center flex-col w-[55px] bg-red-500 border-2 rounded-lg p-1' style={{elevation: 6}} onPress={()=> showDeleteConfirmation(item)}>
                     <EntypoIcon name='trash' size={20} color="black"/> 
                     <Text className='text-black text-sm'>Delete</Text>    
-                </TouchableOpacity>
+                </Pressable>
             </View>
         </View>
     </View>

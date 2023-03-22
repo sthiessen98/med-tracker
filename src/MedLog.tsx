@@ -38,6 +38,7 @@ function ListMeds({ onBackPress }: medLogProps) {
 
 
     const refetchData = async() => {
+        console.log('refetching data...');
         const response = await AsyncStorage.getItem('currentMedLog');
         if(response !== null){
             const result: medLogInstance[] = JSON.parse(response);
@@ -123,6 +124,7 @@ function ListMeds({ onBackPress }: medLogProps) {
             <SectionList
             className='mx-2 bg-slate-100'
             sections={groupedLogData}
+            initialNumToRender={12}
             renderItem={renderItem}
             renderSectionHeader={({section: {title}}) => (
                 <MedLogGroupHeader dateString={title}/>
