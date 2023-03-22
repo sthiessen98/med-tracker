@@ -4,17 +4,15 @@ import { currMedInstance } from "./App";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ScreenHeader from "./Components/ScreenHeader";
 import ScreenFooter from "./Components/ScreenFooter";
-import { Field, Formik } from "formik";
+import { Formik } from "formik";
 import * as yup from "yup";
-import SelectableColor from "./Components/SelectableColor";
 import ColorSelector from "./Components/ColorSelector";
+import { addMedProps } from "./Util/navigationTypes";
 
-interface addMedProps {
-    editableItem?: currMedInstance;
-    onBackPress(): void;
-}
 
-function AddMed({onBackPress, editableItem}: addMedProps){
+function AddMed({navigation, route}: addMedProps){
+
+    const editableItem = route.params?.editableItem;
 
     const updateMedList = async (newMed: currMedInstance)=> {
         const jsonValue = await AsyncStorage.getItem('currentMeds');
@@ -77,7 +75,7 @@ function AddMed({onBackPress, editableItem}: addMedProps){
                                 color:values.color ?? undefined,
                             }
                             await updateMedList(newMed);
-                            onBackPress();
+                            navigation.navigate('medList');
                         }
                 }}>
                     {({ handleChange, handleSubmit, setFieldValue, values, errors }) => (
@@ -139,7 +137,7 @@ function AddMed({onBackPress, editableItem}: addMedProps){
                 </Formik>
 
             <View className='justify-end'>
-                <ScreenFooter leftButtonTitle="Back" leftButtonPress={()=> onBackPress()}/>
+                <ScreenFooter leftButtonTitle="Back" leftButtonPress={()=> navigation.navigate('medList')}/>
             </View>
         </View>
     );

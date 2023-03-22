@@ -1,20 +1,17 @@
-import React, { useEffect, useMemo, useReducer, useState } from "react";
-import { SectionList, Text, View } from "react-native";
+import React, { useEffect, useMemo, useState } from "react";
+import { SectionList, View } from "react-native";
 import { medLogInstance } from "./App";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MedLogItem from "./MedLogItem";
 import ScreenHeader from "./Components/ScreenHeader";
 import ScreenFooter from "./Components/ScreenFooter";
 import MedLogEditItem from "./MedLogEditItem";
-import ListSeperator from "./Components/ListSeperator";
 import MedLogGroupHeader from "./MedLogGroupHeader";
+import { medLogProps } from "./Util/navigationTypes";
 
 
 interface medProps {
     item: medLogInstance;
-}
-interface medLogProps {
-    onBackPress(): void;
 }
 
 interface groupedLogs{
@@ -23,7 +20,7 @@ interface groupedLogs{
 }
 
 
-function ListMeds({ onBackPress }: medLogProps) {
+function ListMeds({ navigation }: medLogProps) {
     const [medLog, setMedLog] = useState<medLogInstance[]>([]);
     const [currEditLog, setCurrEditLog] = useState<medLogInstance | null>(null);
 
@@ -131,7 +128,7 @@ function ListMeds({ onBackPress }: medLogProps) {
               )}
             keyExtractor={(item) => item.id}
             />
-            <ScreenFooter leftButtonTitle="Back" leftButtonPress={()=> onBackPress()}/>
+            <ScreenFooter leftButtonTitle="Back" leftButtonPress={()=> navigation.navigate('medList')}/>
         </View>
 
     );

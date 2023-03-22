@@ -7,19 +7,15 @@ import ScreenHeader from "./Components/ScreenHeader";
 import ScreenFooter from "./Components/ScreenFooter";
 import ListSeperator from "./Components/ListSeperator";
 import Toast from "react-native-toast-message";
+import { medListProps } from "./Util/navigationTypes";
 
 
 interface medProps {
     item: currMedInstance
 }
-interface medListProps {
-    onAddPress(): void;
-    onEditPress: (item: currMedInstance) => void;
-    onLogPress(): void;
-}
 
 
-function ListMeds({ onAddPress, onLogPress, onEditPress}: medListProps) {
+function ListMeds({ navigation }: medListProps){
     const [medList, setMedList] = useState<currMedInstance[]>([]);
     const [medLogs, setMedLogs] = useState<medLogInstance[]>([]);
     const [editMode, setEditMode] = useState<Boolean>(false);
@@ -33,7 +29,15 @@ function ListMeds({ onAddPress, onLogPress, onEditPress}: medListProps) {
       }
       
     const renderItem = ({item}: medProps)=>(
-        <MedListItem med={item} logs={medLogs.filter((log)=> log.medId === item.id)} editMode={editMode} onEditPress={onEditPress} refetch={()=> refetchData()} showToast={(med: currMedInstance)=> showToast(med)}/>
+        <MedListItem 
+            med={item} 
+            logs={medLogs.filter((log)=> log.medId === item.id)} 
+            editMode={editMode} 
+            onEditPress={(item)=> navigation.navigate('addMed', {
+                editableItem: item
+            })} 
+            refetch={()=> refetchData()} 
+            showToast={(med: currMedInstance)=> showToast(med)}/>
         );
 
     const refetchData = async() => {
@@ -61,7 +65,7 @@ function ListMeds({ onAddPress, onLogPress, onEditPress}: medListProps) {
                 />
             </View>
             <View className="basis-1/10 flex-end">
-                <ScreenFooter leftButtonTitle="Logs" leftButtonPress={()=> onLogPress()} rightButtonTitle='Add' rightButtonPress={()=> onAddPress()}/>
+                <ScreenFooter leftButtonTitle="Logs" leftButtonPress={()=> navigation.navigate('medLog')} rightButtonTitle='Add' rightButtonPress={()=> navigation.navigate('addMed')}/>
             </View>              
         </View>
     );
