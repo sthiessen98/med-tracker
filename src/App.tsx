@@ -40,16 +40,8 @@ export interface currMedInstance {
   color?: string;
   allowNotifications?: boolean;
 }
-enum screens {
-  list = 'list',
-  add = 'add',
-  log = 'log',
-};
 
 function App(){
-  const [currentScreen, setCurrentScreen] = useState<screens>(screens.list);
-  const [editableItem, setEditableItem] = useState<currMedInstance | undefined>(undefined);
-
   const Stack = createNativeStackNavigator<RootStackParamList>();
   
   return(
@@ -65,41 +57,6 @@ function App(){
       </Stack.Navigator>
     </NavigationContainer>
   );
-  // if(currentScreen === screens.list){
-  //   return(
-  //     <SafeAreaView>
-  //       <ListMeds 
-  //       onAddPress={()=> {setCurrentScreen(screens.add)}}
-  //       onEditPress={(item)=> {
-  //         setCurrentScreen(screens.add);
-  //         setEditableItem(item);
-  //       }}
-  //       onLogPress={()=> {setCurrentScreen(screens.log)}}
-  //     />
-  //     <Toast/>
-  //     </SafeAreaView>
-  //   )
-  // }else if(currentScreen === screens.add){
-  //   return(
-  //     <SafeAreaView>
-  //       <AddMed 
-  //       editableItem={editableItem}
-  //       onBackPress={()=>{
-  //         setCurrentScreen(screens.list);
-  //         setEditableItem(undefined);
-  //       }}/>
-  //     </SafeAreaView>
-  //   );
-  // }else if(currentScreen === screens.log){
-  //   return(
-  //     <SafeAreaView>
-  //       <MedLog onBackPress={()=>{
-  //         setCurrentScreen(screens.list);
-  //       }}/>
-  //     </SafeAreaView>
-  //   );
-
-  // }
 }
 
 export default App;

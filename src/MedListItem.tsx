@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Pressable, Text, TouchableOpacity, View } from "react-native";
 import { currMedInstance, medLogInstance } from "./App";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import EntypoIcon from 'react-native-vector-icons/Entypo';

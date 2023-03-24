@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { FlatList, View } from "react-native";
 import { currMedInstance, medLogInstance } from "./App";
 import MedListItem from "./MedListItem";
@@ -8,6 +8,7 @@ import ScreenFooter from "./Components/ScreenFooter";
 import ListSeperator from "./Components/ListSeperator";
 import Toast from "react-native-toast-message";
 import { medListProps } from "./Util/navigationTypes";
+import { useFocusEffect } from "@react-navigation/native";
 
 
 interface medProps {
@@ -47,9 +48,11 @@ function ListMeds({ navigation }: medListProps){
         responseLogs !== null ? setMedLogs(JSON.parse(responseLogs)) : setMedLogs([]);
     };
 
-    useEffect(()=> {
-        refetchData();
-    },[]);
+    useFocusEffect(
+        React.useCallback(() => {
+          refetchData();
+        }, [])
+      );
 
     return(
         <View className='bg-background h-full w-screen flex-col justify-start align-stretch'>

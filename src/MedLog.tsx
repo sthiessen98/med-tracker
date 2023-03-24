@@ -35,7 +35,6 @@ function ListMeds({ navigation }: medLogProps) {
 
 
     const refetchData = async() => {
-        console.log('refetching data...');
         const response = await AsyncStorage.getItem('currentMedLog');
         if(response !== null){
             const result: medLogInstance[] = JSON.parse(response);
