@@ -16,7 +16,7 @@ function ColorSelector({preselectedColor, onPress}: ColorSelectorProps){
             <ScrollView horizontal={true} className='flex-row mx-0.5'>
                 {sortedColors.map((c)=> {
                     return (
-                        <SelectableColor color={c} selectedColor={selectedColor} onPress={(pressedColor)=> {
+                        <SelectableColor key={c} color={c} selectedColor={selectedColor} onPress={(pressedColor)=> {
                             setSelectedColor(pressedColor);
                             onPress(pressedColor);
                         }}/>

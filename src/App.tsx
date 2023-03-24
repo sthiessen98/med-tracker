@@ -45,17 +45,19 @@ function App(){
   const Stack = createNativeStackNavigator<RootStackParamList>();
   
   return(
+    <>
     <NavigationContainer>
-      <Stack.Navigator 
-      screenOptions={{
-        headerShown: false,
-        animation: 'slide_from_bottom',
-    }}>
-        <Stack.Screen name='medList' component={ListMeds}/>
-        <Stack.Screen name='addMed' component={AddMed}/>
-        <Stack.Screen name='medLog' component={MedLog}/>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+          animation: 'slide_from_bottom',
+        }}>
+        <Stack.Screen name='medList' component={ListMeds} />
+        <Stack.Screen name='addMed' component={AddMed} />
+        <Stack.Screen name='medLog' component={MedLog} />
       </Stack.Navigator>
-    </NavigationContainer>
+    </NavigationContainer><Toast />
+    </>
   );
 }
 
