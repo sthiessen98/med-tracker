@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Button, Text, View } from "react-native";
-import { medLogInstance } from "./App";
+import { medLogInstance } from "../App";
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 interface IProps{

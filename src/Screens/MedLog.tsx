@@ -1,13 +1,13 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { SectionList, View } from "react-native";
-import { medLogInstance } from "./App";
+import { medLogInstance } from "../App";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import MedLogItem from "./MedLogItem";
-import ScreenHeader from "./Components/ScreenHeader";
-import ScreenFooter from "./Components/ScreenFooter";
-import MedLogEditItem from "./MedLogEditItem";
-import MedLogGroupHeader from "./MedLogGroupHeader";
-import { medLogProps } from "./Util/navigationTypes";
+import MedLogItem from "../Components/MedLogItem";
+import ScreenHeader from "../Components/ScreenHeader";
+import ScreenFooter from "../Components/ScreenFooter";
+import MedLogEditItem from "../Components/MedLogEditItem";
+import MedLogGroupHeader from "../MedLogGroupHeader";
+import { medLogProps } from "../Util/navigationTypes";
 
 
 interface medProps {

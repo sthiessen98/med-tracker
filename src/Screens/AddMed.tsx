@@ -1,13 +1,13 @@
 import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 import uuid from 'react-native-uuid';
-import { currMedInstance } from "./App";
+import { currMedInstance } from "../App";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import ScreenHeader from "./Components/ScreenHeader";
-import ScreenFooter from "./Components/ScreenFooter";
+import ScreenHeader from "../Components/ScreenHeader";
+import ScreenFooter from "../Components/ScreenFooter";
 import { Formik } from "formik";
 import * as yup from "yup";
-import ColorSelector from "./Components/ColorSelector";
-import { addMedProps } from "./Util/navigationTypes";
+import ColorSelector from "../Components/ColorSelector";
+import { addMedProps } from "../Util/navigationTypes";
 
 
 function AddMed({navigation, route}: addMedProps){

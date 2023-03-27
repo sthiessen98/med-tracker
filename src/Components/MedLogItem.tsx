@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import React from "react";
 import { Alert, Pressable, Text, View } from "react-native";
 import EntypoIcon from 'react-native-vector-icons/Entypo';
-import { medLogInstance } from "./App";
+import { medLogInstance } from "../App";
 
 interface MedLogItemProps {
     item: medLogInstance;

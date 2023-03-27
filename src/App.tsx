@@ -12,9 +12,9 @@ import React, { useState } from 'react';
 import {
   SafeAreaView,
 } from 'react-native';
-import ListMeds from './ListMeds';
-import AddMed from './AddMed';
-import MedLog from './MedLog';
+import ListMeds from './Screens/ListMeds';
+import AddMed from './Screens/AddMed';
+import MedLog from './Screens/MedLog';
 import Toast from 'react-native-toast-message';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';

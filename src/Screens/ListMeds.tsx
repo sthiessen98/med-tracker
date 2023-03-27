@@ -1,13 +1,13 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { FlatList, View } from "react-native";
-import { currMedInstance, medLogInstance } from "./App";
-import MedListItem from "./MedListItem";
+import { currMedInstance, medLogInstance } from "../App";
+import MedListItem from "../Components/MedListItem";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import ScreenHeader from "./Components/ScreenHeader";
-import ScreenFooter from "./Components/ScreenFooter";
-import ListSeperator from "./Components/ListSeperator";
+import ScreenHeader from "../Components/ScreenHeader";
+import ScreenFooter from "../Components/ScreenFooter";
+import ListSeperator from "../Components/ListSeperator";
 import Toast from "react-native-toast-message";
-import { medListProps } from "./Util/navigationTypes";
+import { medListProps } from "../Util/navigationTypes";
 import { useFocusEffect } from "@react-navigation/native";
 
 
