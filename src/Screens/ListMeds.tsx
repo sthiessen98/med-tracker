@@ -78,7 +78,7 @@ function ListMeds({ navigation }: medListProps){
                                 <Stethescope width={screenWidth} height={screenHeight}/>
                             </Svg>
                         </View>
-                        <Text className='text-black text-lg text-center font-bold'>You don't have any medications saved yet. Press the add button to begin adding your first med!</Text>
+                        <Text className='basis-2/5 text-black text-lg text-center font-bold'>You don't have any medications saved yet. Press the add button to begin adding your first med!</Text>
                     </View>
                 )}
             </View>

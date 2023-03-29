@@ -27,12 +27,12 @@ function AddMed({navigation, route}: addMedProps){
     const medValidationSchema = yup.object().shape({
         name: yup
             .string()
-            .min(3, ({min})=> `The drug name must be at least ${min} characters long`)
-            .required('Please enter the drug name'),
+            .min(3, ({min})=> `The medication name must be at least ${min} characters long`)
+            .required('Please enter the medication name'),
         dosage: yup
             .number()
             .moreThan(0, 'Please enter a number greater than 0')
-            .required('Please enter the drug dosage'),
+            .required('Please enter the medication dosage'),
         maxDosage: yup
             .number()
             .nullable()
@@ -82,7 +82,7 @@ function AddMed({navigation, route}: addMedProps){
                     <View className='flex-col justify-between h-3/4 bg-background'>
                         <View className='justify-start'>
                             <View className='flex-col'>
-                                <Text className='text-black text-sm pt-1 ml-1'>Drug Name:</Text>
+                                <Text className='text-black text-sm pt-1 ml-1'>Medication Name:</Text>
                                 <TextInput className='text-black bg-white h-[40px] pl-1 mx-1 border'
                                 onChangeText={handleChange('name')}
                                 value={values.name}
