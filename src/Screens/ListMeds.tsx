@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useCallback } from "react";
-import { FlatList, View } from "react-native";
+import React, { useState } from "react";
+import { FlatList, Text, View, Dimensions, StyleSheet } from "react-native";
 import { currMedInstance, medLogInstance } from "../App";
 import MedListItem from "../Components/MedListItem";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -9,12 +9,15 @@ import ListSeperator from "../Components/ListSeperator";
 import Toast from "react-native-toast-message";
 import { medListProps } from "../Util/navigationTypes";
 import { useFocusEffect } from "@react-navigation/native";
-
+import Svg from 'react-native-svg';
+import Stethescope from '../stethescope.svg';
 
 interface medProps {
     item: currMedInstance
 }
 
+const screenWidth = Dimensions.get("window").width;
+const screenHeight = Dimensions.get("window").height;
 
 function ListMeds({ navigation }: medListProps){
     const [medList, setMedList] = useState<currMedInstance[]>([]);
@@ -60,12 +63,24 @@ function ListMeds({ navigation }: medListProps){
                 <ScreenHeader title={'Current Meds'} mode={editMode ? 'edit' : 'home'} onPress={()=> setEditMode(!editMode)}/>
             </View>
             <View className="basis-4/5 flex-grow">
-                <FlatList
-                data={medList}
-                renderItem={renderItem}
-                keyExtractor={(item) => item.id}
-                ItemSeparatorComponent={ListSeperator}
-                />
+                {medList.length !== 0 && (
+                    <FlatList
+                    data={medList}
+                    renderItem={renderItem}
+                    keyExtractor={(item) => item.id}
+                    ItemSeparatorComponent={ListSeperator}
+                    />
+                )}
+                {medList.length === 0 && (
+                    <View className='flex-col h-full align-center bg-background'>
+                        <View className='basis-3/5'>
+                            <Svg style={styles.svg} height="88%" width="88%" viewBox={`0 0 ${screenWidth} ${screenHeight}`}>
+                                <Stethescope width={screenWidth} height={screenHeight}/>
+                            </Svg>
+                        </View>
+                        <Text className='text-black text-lg text-center font-bold'>You don't have any medications saved yet. Press the add button to begin adding your first med!</Text>
+                    </View>
+                )}
             </View>
             <View className="basis-1/10 flex-end">
                 <ScreenFooter leftButtonTitle="Logs" leftButtonPress={()=> navigation.navigate('medLog')} rightButtonTitle='Add' rightButtonPress={()=> navigation.navigate('addMed')}/>
@@ -73,5 +88,17 @@ function ListMeds({ navigation }: medListProps){
         </View>
     );
 };
+
+const styles= StyleSheet.create({
+    svg: {
+        position: 'absolute',
+        left: '30%',
+        top: '30%',
+        transform: [
+           {translateX: - screenWidth * 0.24},
+           {translateY: - screenWidth * 0.24}
+        ]
+    }
+});
 
 export default ListMeds;
