@@ -6,7 +6,7 @@ import MedLogItem from "../Components/MedLogItem";
 import ScreenHeader from "../Components/ScreenHeader";
 import ScreenFooter from "../Components/ScreenFooter";
 import MedLogEditItem from "../Components/MedLogEditItem";
-import MedLogGroupHeader from "../MedLogGroupHeader";
+import MedLogGroupHeader from "../Components/MedLogGroupHeader";
 import { medLogProps } from "../Util/navigationTypes";
 
 

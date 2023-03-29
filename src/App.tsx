@@ -8,10 +8,7 @@
  * @format
  */
 
-import React, { useState } from 'react';
-import {
-  SafeAreaView,
-} from 'react-native';
+import React from 'react';
 import ListMeds from './Screens/ListMeds';
 import AddMed from './Screens/AddMed';
 import MedLog from './Screens/MedLog';
