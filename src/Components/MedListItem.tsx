@@ -5,8 +5,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import uuid from 'react-native-uuid';
 
-interface MedListItemProps {
+export interface MedListItemProps {
     med: currMedInstance;
+    position: number;
     logs: medLogInstance[];
     refetch(): void;
     showToast:(med: currMedInstance)=> void;
@@ -25,11 +26,11 @@ function MedListItem({med, logs, refetch, showToast, editMode, onEditPress}: Med
     const takenRecently = Boolean(doseTakenRecently >= (med?.maxDosage ?? 0) && med?.maxDosage && med?.doseInterval);
 
     //Calculate time to when we can take next dose
-    let minutesToNextDose: number;
     const maxDoses = (med?.maxDosage ?? 0) / med.dose;
     const filteredSortedLogs = logs.filter((log) => new Date(log.time).toISOString() > cutOffTime.toISOString()).sort((a,b)=> a.time > b.time ? 1 : -1);
     const oldestDose =  filteredSortedLogs.slice(filteredSortedLogs?.length - maxDoses, filteredSortedLogs?.length)?.[0] ?? undefined;
 
+    let minutesToNextDose: number;
     if(oldestDose !== undefined){
         const oldestDoseDateDiff = new Date(oldestDose.time).getTime()- cutOffTime.getTime();
         minutesToNextDose = Math.floor(((oldestDoseDateDiff/1000)/60)); //miliseconds -> Minutes

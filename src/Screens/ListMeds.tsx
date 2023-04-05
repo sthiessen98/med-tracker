@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { FlatList, Text, View, Dimensions, StyleSheet } from "react-native";
+import React, { useRef, useState } from "react";
+import { FlatList, Text, View, Dimensions, StyleSheet, ScrollView } from "react-native";
 import { currMedInstance, medLogInstance } from "../App";
 import MedListItem from "../Components/MedListItem";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -11,9 +11,11 @@ import { medListProps } from "../Util/navigationTypes";
 import { useFocusEffect } from "@react-navigation/native";
 import Svg from 'react-native-svg';
 import Stethescope from '../stethescope.svg';
+import MoveableMedListItem from "../Components/MoveableMedListItem";
 
 interface medProps {
-    item: currMedInstance
+    item: currMedInstance,
+    index: number,
 }
 
 const screenWidth = Dimensions.get("window").width;
@@ -30,19 +32,9 @@ function ListMeds({ navigation }: medListProps){
           text1: 'Log Added',
           text2: `Successfully logged ${med.name} usage`
         });
-      }
-      
-    const renderItem = ({item}: medProps)=>(
-        <MedListItem 
-            med={item} 
-            logs={medLogs.filter((log)=> log.medId === item.id)} 
-            editMode={editMode} 
-            onEditPress={(item)=> navigation.navigate('addMed', {
-                editableItem: item
-            })} 
-            refetch={()=> refetchData()} 
-            showToast={(med: currMedInstance)=> showToast(med)}/>
-        );
+      };
+
+    const positions = useRef();
 
     const refetchData = async() => {
         let response = await AsyncStorage.getItem('currentMeds');
@@ -64,12 +56,25 @@ function ListMeds({ navigation }: medListProps){
             </View>
             <View className="basis-4/5 flex-grow">
                 {medList.length !== 0 && (
-                    <FlatList
-                    data={medList}
-                    renderItem={renderItem}
-                    keyExtractor={(item) => item.id}
-                    ItemSeparatorComponent={ListSeperator}
-                    />
+                    <ScrollView
+                    style={{
+                        flex: 1,
+                        position: 'relative',
+                    }}>
+                    {medList.map((item, index)=>(
+                        <MoveableMedListItem 
+                        key={item.id}
+                        med={item} 
+                        position={index}
+                        logs={medLogs.filter((log)=> log.medId === item.id)} 
+                        editMode={editMode} 
+                        onEditPress={(item)=> navigation.navigate('addMed', {
+                            editableItem: item
+                        })} 
+                        refetch={()=> refetchData()} 
+                        showToast={(med: currMedInstance)=> showToast(med)}/>
+                    ))}
+                    </ScrollView>
                 )}
                 {medList.length === 0 && (
                     <View className='flex-col h-full align-center bg-background'>
