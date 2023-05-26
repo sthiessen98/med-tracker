@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
-import { FlatList, Text, View, Dimensions, StyleSheet, ScrollView } from "react-native";
+import { FlatList, Text, View, Dimensions, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
+import DraggableFlatList, { RenderItemParams, ScaleDecorator } from 'react-native-draggable-flatlist'
 import { currMedInstance, medLogInstance } from "../App";
 import MedListItem from "../Components/MedListItem";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -49,6 +50,35 @@ function ListMeds({ navigation }: medListProps){
         }, [])
       );
 
+
+    const renderItem = ({ item, drag, isActive }: RenderItemParams<currMedInstance>) => {
+        const itemLogs = medLogs.filter((log)=> log.medId === item.id); 
+    return (
+      <ScaleDecorator>
+          <View style={{
+            height: 70,
+            width: '100%',
+            justifyContent: 'flex-start',
+            alignItems: 'stretch',
+            }}>
+            <MedListItem 
+                med={item} 
+                logs={itemLogs}
+                refetch={refetchData} 
+                showToast={showToast} 
+                editMode={editMode} 
+                onEditPress={(item)=> navigation.navigate('addMed', {
+                    editableItem: item
+                })}
+                drag={drag}
+                isActive={isActive}
+                />
+          </View>
+      </ScaleDecorator>
+    );
+  };
+
+
     return(
         <View className='bg-background h-full w-screen flex-col justify-start align-stretch'>
             <View>
@@ -56,25 +86,13 @@ function ListMeds({ navigation }: medListProps){
             </View>
             <View className="basis-4/5 flex-grow">
                 {medList.length !== 0 && (
-                    <ScrollView
-                    style={{
-                        flex: 1,
-                        position: 'relative',
-                    }}>
-                    {medList.map((item, index)=>(
-                        <MoveableMedListItem 
-                        key={item.id}
-                        med={item} 
-                        position={index}
-                        logs={medLogs.filter((log)=> log.medId === item.id)} 
-                        editMode={editMode} 
-                        onEditPress={(item)=> navigation.navigate('addMed', {
-                            editableItem: item
-                        })} 
-                        refetch={()=> refetchData()} 
-                        showToast={(med: currMedInstance)=> showToast(med)}/>
-                    ))}
-                    </ScrollView>
+                        <DraggableFlatList
+                        data={medList}
+                         onDragEnd={({ data }) => {
+                            setMedList(data);
+                            }}
+                        keyExtractor={(item) => item.id}
+                        renderItem={renderItem}/>
                 )}
                 {medList.length === 0 && (
                     <View className='flex-col h-full align-center bg-background'>

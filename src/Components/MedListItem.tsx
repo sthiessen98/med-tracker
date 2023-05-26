@@ -7,15 +7,16 @@ import uuid from 'react-native-uuid';
 
 export interface MedListItemProps {
     med: currMedInstance;
-    position: number;
     logs: medLogInstance[];
     refetch(): void;
     showToast:(med: currMedInstance)=> void;
     editMode: Boolean;
     onEditPress:(item: currMedInstance) => void;
+    drag:()=> void;
+    isActive: boolean;
 }
 
-function MedListItem({med, logs, refetch, showToast, editMode, onEditPress}: MedListItemProps){
+function MedListItem({med, logs, refetch, showToast, editMode, onEditPress, drag, isActive}: MedListItemProps){
 
     const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
 
@@ -105,8 +106,14 @@ function MedListItem({med, logs, refetch, showToast, editMode, onEditPress}: Med
                                 color: med?.color,
                             };
                             await addMedLog(log);
-                        }}> 
-            <View className='border-white border-2 rounded-full h-[45px] w-[45px] mt-1 ml-1 mb-2' style={{backgroundColor: med.color}}/>
+                        }}>
+            {editMode ? (
+                <TouchableOpacity className='items-center h-[45px] w-[45px] mt-1 ml-1 mb-2' onLongPress={drag} disabled={isActive}>
+                    <EntypoIcon name='dots-three-horizontal' size={35} color={med.color}/>   
+                </TouchableOpacity>  
+            ) : (
+                <View className='border-white border-2 rounded-full h-[45px] w-[45px] mt-1 ml-1 mb-2' style={{backgroundColor: med.color}}/>
+            )}
             <View className='basis-2/5 w-full h-full mx-1'>
                 <View className='flex-col h-full items-start'>
                     <Text className='basis-1/2 text-black text-lg'>{med.name}</Text>

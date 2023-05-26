@@ -16,6 +16,7 @@ import Toast from 'react-native-toast-message';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { RootStackParamList } from './Util/navigationTypes';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 
 
@@ -42,7 +43,7 @@ function App(){
   const Stack = createNativeStackNavigator<RootStackParamList>();
   
   return(
-    <>
+    <GestureHandlerRootView style={{flex: 1}}>
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
@@ -54,7 +55,7 @@ function App(){
         <Stack.Screen name='medLog' component={MedLog} />
       </Stack.Navigator>
     </NavigationContainer><Toast />
-    </>
+    </GestureHandlerRootView>
   );
 }
 
