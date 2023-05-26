@@ -10,7 +10,7 @@ export interface MedListItemProps {
     logs: medLogInstance[];
     refetch(): void;
     showToast:(med: currMedInstance)=> void;
-    editMode: Boolean;
+    editMode: boolean;
     onEditPress:(item: currMedInstance) => void;
     drag:()=> void;
     isActive: boolean;
@@ -96,7 +96,8 @@ function MedListItem({med, logs, refetch, showToast, editMode, onEditPress, drag
     
     return(
         <View className='flex-row'>
-            <TouchableOpacity className='flex-row w-full h-[60px]' onPress={async ()=>{
+            <TouchableOpacity className='flex-row w-full h-[60px]' 
+            onPress={async ()=>{
                             const log: medLogInstance = {
                                 id: uuid.v4().toString(),
                                 medId: med.id,
@@ -106,7 +107,8 @@ function MedListItem({med, logs, refetch, showToast, editMode, onEditPress, drag
                                 color: med?.color,
                             };
                             await addMedLog(log);
-                        }}>
+                        }}
+                        disabled={editMode}>
             {editMode ? (
                 <TouchableOpacity className='items-center h-[45px] w-[45px] mt-1 ml-1 mb-2' onLongPress={drag} disabled={isActive}>
                     <EntypoIcon name='dots-three-horizontal' size={35} color={med.color}/>   
