@@ -12,12 +12,7 @@ import { medListProps } from "../Util/navigationTypes";
 import { useFocusEffect } from "@react-navigation/native";
 import Svg from 'react-native-svg';
 import Stethescope from '../stethescope.svg';
-import MoveableMedListItem from "../Components/MoveableMedListItem";
-
-interface medProps {
-    item: currMedInstance,
-    index: number,
-}
+import { reorderMeds } from "../Util/localStorage";
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
@@ -34,8 +29,6 @@ function ListMeds({ navigation }: medListProps){
           text2: `Successfully logged ${med.name} usage`
         });
       };
-
-    const positions = useRef();
 
     const refetchData = async() => {
         let response = await AsyncStorage.getItem('currentMeds');
@@ -88,8 +81,9 @@ function ListMeds({ navigation }: medListProps){
                 {medList.length !== 0 && (
                         <DraggableFlatList
                         data={medList}
-                         onDragEnd={({ data }) => {
+                         onDragEnd={async ({ data }) => {
                             setMedList(data);
+                            await reorderMeds(data);
                             }}
                         keyExtractor={(item) => item.id}
                         renderItem={renderItem}/>
