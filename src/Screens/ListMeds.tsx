@@ -20,7 +20,7 @@ const screenHeight = Dimensions.get("window").height;
 function ListMeds({ navigation }: medListProps){
     const [medList, setMedList] = useState<currMedInstance[]>([]);
     const [medLogs, setMedLogs] = useState<medLogInstance[]>([]);
-    const [editMode, setEditMode] = useState<Boolean>(false);
+    const [editMode, setEditMode] = useState<boolean>(false);
 
     const showToast = (med: currMedInstance) => {
         Toast.show({
