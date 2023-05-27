@@ -49,7 +49,7 @@ function ListMeds({ navigation }: medListProps){
     return (
       <ScaleDecorator>
           <View style={{
-            height: 70,
+            height: 55,
             width: '100%',
             justifyContent: 'flex-start',
             alignItems: 'stretch',
@@ -67,6 +67,7 @@ function ListMeds({ navigation }: medListProps){
                 isActive={isActive}
                 />
           </View>
+          <ListSeperator/>
       </ScaleDecorator>
     );
   };
